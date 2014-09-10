@@ -16,7 +16,8 @@ class Vector {
 
 		void init(const size_t);
 		void copy(const Vector &);
-		void copy_data(size_t, const T*);
+		void more_memory();
+		void copy_data(const size_t, const T*, const size_t = 0, const size_t = 0);
 		void is_ok();
 		void set_all(const T &);
 
@@ -67,15 +68,17 @@ class Vector {
 
 		void erase(std::size_t);
 
-		size_t size() const { return length; }
+		size_t size() const;
 
-		size_t capacity() const { return cap; }
+		size_t capacity() const;
 
 		T* begin();
 
 		T* end();
 
 		T* find(T const&);
+
+		void print();
 
 		/*
 			An Array reference keeps the array typing information AND

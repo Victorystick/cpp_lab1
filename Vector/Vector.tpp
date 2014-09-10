@@ -1,4 +1,8 @@
 //#include "Vector.hpp"
+#include <iostream>
+#include <sstream>
+#include <algorithm>
+#include <iterator>
 
 template <typename T>
 void Vector<T>::init(const size_t s) {
@@ -35,9 +39,11 @@ void Vector<T>::copy(const Vector<T> & other) {
 }
 
 template <typename T>
-void Vector<T>::copy_data(size_t length, const T* other) {
-	for (size_t i = 0; i < length; ++i) {
-		vec[i] = other[i];
+void Vector<T>::copy_data(const size_t end, const T* other,
+	                        const size_t start, const size_t my_index) {
+	// i < end
+	for (size_t i = end - 1; i < end && i >= start; i--) {
+		vec[i + my_index] = other[i];
 	}
 }
 
@@ -137,22 +143,66 @@ T Vector<T>::operator[](const size_t index) const {
 template <typename T>
 void Vector<T>::push_back(const T val) {
 	if (length >= cap) {
-		if (cap < 2) {
-			cap = 2; // 1.6 * 0 == 0. Not what we want.
-			// floor(1.6 * 1) == 1. Stuck on cap==1.
-		}
-		cap = (size_t)((double)cap * 1.6);
-		T* other = vec;
-		vec = new T [ cap ];
-		copy_data(length, other);
-		delete[] other;
+		more_memory();
 	}
+
 	vec[length] = val;
 
 	++length;
 }
 
 template <typename T>
+void Vector<T>::more_memory() {
+	if (cap < 2) {
+		cap = 2; // 1.6 * 0 == 0. Not what we want.
+		// floor(1.6 * 1) == 1. Stuck on cap==1.
+	}
+
+	cap = (size_t)((double)cap * 1.6);
+	T* other = vec;
+	vec = new T [ cap ];
+	copy_data(length, other);
+	delete[] other;
+}
+
+template <typename T>
 void Vector<T>::clear() {
 	length = 0;
+}
+
+template <typename T>
+size_t Vector<T>::size() const {
+	return length;
+}
+
+template <typename T>
+size_t Vector<T>::capacity() const {
+	return cap;
+}
+
+template <typename T>
+void Vector<T>::print() {
+		for (int i = 0; i < size(); ++i) {
+			std::clog << i << "=" << vec[i] << std::endl;
+		}
+}
+
+template <typename T>
+void Vector<T>::insert(const size_t index, const T val) {
+	if (index > length) {
+		throw std::out_of_range ("Vector index is out of bounds.");
+	}
+
+	if (index == length) {
+		push_back(val);
+		return;
+	}
+
+	if (length >= cap) {
+		more_memory();
+	}
+
+	copy_data(length, vec, index, 1);
+	vec[index] = val;
+	++length;
 }
