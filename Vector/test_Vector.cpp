@@ -119,12 +119,45 @@ public:
 	void test_clear( void ) {
 		Vector<int> v({2,3,5,99,42,0,2});
 		v.clear();
-		TS_ASSERT_EQUALS(v.size(), 0)
+		TS_ASSERT_EQUALS(v.size(), 0);
 		TS_ASSERT_THROWS( v[0], std::out_of_range);
 	}
 
 	void test_erase() {
+		Vector<int> v({1,2,3,4,5});
+		TS_ASSERT_EQUALS(v.size(), 5);
 
+		v.erase(5);
+		TS_ASSERT_EQUALS(v.size(), 5);
+		TS_ASSERT_EQUALS(v[0], 1);
+		TS_ASSERT_EQUALS(v[1], 2);
+		TS_ASSERT_EQUALS(v[2], 3);
+		TS_ASSERT_EQUALS(v[3], 4);
+		TS_ASSERT_EQUALS(v[4], 5);
+
+		{
+			Vector<int> w = v;
+
+			w.erase(4);
+			TS_ASSERT_EQUALS(w.size(), 4);
+			TS_ASSERT_EQUALS(w[0], 1);
+			TS_ASSERT_EQUALS(w[1], 2);
+			TS_ASSERT_EQUALS(w[2], 3);
+			TS_ASSERT_EQUALS(w[3], 4);
+		}
+
+		v.erase(2);
+		TS_ASSERT_EQUALS(v.size(), 4);
+		TS_ASSERT_EQUALS(v[0], 1);
+		TS_ASSERT_EQUALS(v[1], 2);
+		TS_ASSERT_EQUALS(v[2], 4);
+		TS_ASSERT_EQUALS(v[3], 5);
+
+		v.erase(0);
+		TS_ASSERT_EQUALS(v.size(), 3);
+		TS_ASSERT_EQUALS(v[0], 2);
+		TS_ASSERT_EQUALS(v[1], 4);
+		TS_ASSERT_EQUALS(v[2], 5);
 	}
 
 	void test_size( void ) {

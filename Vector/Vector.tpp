@@ -40,10 +40,15 @@ void Vector<T>::copy(const Vector<T> & other) {
 
 template <typename T>
 void Vector<T>::copy_data(const size_t end, const T* other,
-	                        const size_t start, const size_t my_index) {
-	// i < end
-	for (size_t i = end - 1; i < end && i >= start; i--) {
-		vec[i + my_index] = other[i];
+	                        const size_t start, const int shift) {
+	if (shift > 0) {
+		for (size_t i = end - 1; i < end && i >= start; --i) {
+			vec[i + shift] = other[i];
+		}
+	} else {
+		for (int i = start; i < end; ++i) {
+			vec[i + shift] = other[i];
+		}
 	}
 }
 
@@ -205,6 +210,19 @@ void Vector<T>::insert(const size_t index, const T val) {
 	copy_data(length, vec, index, 1);
 	vec[index] = val;
 	++length;
+}
+
+template <typename T>
+void Vector<T>::erase(const size_t index) {
+	if (index >= length) {
+		return;
+	}
+
+	--length;
+
+	if (index != length) {
+		copy_data(length + 1, vec, index + 1, -1);
+	}
 }
 
 template <typename T>

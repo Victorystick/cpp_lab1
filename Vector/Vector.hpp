@@ -32,7 +32,7 @@ class Vector {
 		void init(const size_t);
 		void copy(const Vector &);
 		void more_memory();
-		void copy_data(const size_t, const T*, const size_t = 0, const size_t = 0);
+		void copy_data(const size_t, const T*, const size_t = 0, const int = 0);
 		void is_ok();
 		void set_all(const T &);
 
