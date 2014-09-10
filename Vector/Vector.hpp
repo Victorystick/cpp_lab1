@@ -1,8 +1,13 @@
-#pragma once
+#ifndef MP_Vector
+#define MP_Vector
+
 #include <algorithm>
 #include <iterator>
+#include <cstdlib>
+#include <stdexcept> // Exceptions
+#include <type_traits>
 
-template <typename T>
+template <class T>
 class Vector {
 	private:
 		size_t length;
@@ -92,3 +97,7 @@ class Vector {
 			std::copy(v, v+N, vec);
 		}
 };
+
+#include "Vector.tpp" // Hack for templates
+
+#endif
