@@ -170,7 +170,17 @@ public:
 	}
 
 	void test_find( void ) {
-		//TODO write testcase
+		Vector<int> v({2,3,5,99,42,0,2});
+		Vector<int> target({99,42,0,2});
 
+		int i = 0;
+		// for (Vector<int>::iterator it = v.find(99); it != v.end(); ++it) {
+		for (VectorIterator<int> it = v.find(99); it != v.end(); ++it) {
+			TS_ASSERT_EQUALS(*it, target[i++]);
+		}
+
+		Vector<std::string> strs({"yo", "mama", "so", "fat"});
+
+		TS_ASSERT_EQUALS(*strs.find("sexy"), "fat");
 	}
 };

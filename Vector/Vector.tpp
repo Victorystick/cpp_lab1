@@ -217,6 +217,19 @@ VectorIterator<T> Vector<T>::end() {
 	return VectorIterator<T>(&vec[length - 1]);
 }
 
+template <typename T>
+VectorIterator<T> Vector<T>::find(const T & val) {
+	VectorIterator<T> it = begin();
+
+	for (; it != end(); ++it) {
+		if (*it == val) {
+			return it;
+		}
+	}
+
+	return it;
+}
+
 // ---- ITERATOR
 
 template <class T>
