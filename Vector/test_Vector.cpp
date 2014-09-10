@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include <string>
 
-#include "VectorImpl.cpp"
+#include "Vector.hpp"
 
 class VectorTestSuite : public CxxTest::TestSuite
 {
@@ -95,7 +95,24 @@ public:
 	}
 
 	void test_insert( void ) {
-		//TODO write testcase
+		Vector<int> v({2,3,5});
+		TS_ASSERT_EQUALS(v.size(), 3);
+
+		v.insert(3, 6);
+		TS_ASSERT_EQUALS(v.size(), 4);
+
+		v.insert(2, 4);
+		TS_ASSERT_EQUALS(v.size(), 5);
+
+		v.insert(0, 1);
+		TS_ASSERT_EQUALS(v.size(), 6);
+
+		v.insert(0, 0);
+		TS_ASSERT_EQUALS(v.size(), 7);
+
+		for (int i = 0; i < v.size(); ++i) {
+			TS_ASSERT_EQUALS(v[i], i);
+		}
 	}
 
 	void test_clear( void ) {
