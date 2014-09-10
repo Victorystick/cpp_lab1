@@ -8,6 +8,21 @@
 #include <type_traits>
 
 template <class T>
+class VectorIterator :
+public std::iterator<std::input_iterator_tag, T> {
+	T* vec;
+public:
+	VectorIterator(T* vec);
+	VectorIterator(const VectorIterator & it);
+	VectorIterator& operator++();
+	VectorIterator operator++(int);
+	bool operator==(const VectorIterator & other) const;
+	bool operator!=(const VectorIterator & other) const;
+	T& operator*();
+	const T& operator*() const;
+};
+
+template <class T>
 class Vector {
 	private:
 		size_t length;
@@ -72,11 +87,11 @@ class Vector {
 
 		size_t capacity() const;
 
-		T* begin();
+		VectorIterator<T> begin();
 
-		T* end();
+		VectorIterator<T> end();
 
-		T* find(T const&);
+		VectorIterator<T> find(T const&);
 
 		void print();
 
@@ -99,6 +114,18 @@ class Vector {
 			init(N);
 			std::copy(v, v+N, vec);
 		}
+
+		// class iterator {
+		// 	T* vec;
+		// public:
+		// 	iterator(T* vec);
+		// 	iterator(const T & it);
+		// 	iterator& operator++();
+		// 	iterator operator++(int);
+		// 	bool operator==(const iterator & other) const;
+		// 	bool operator!=(const iterator & other) const;
+		// 	T& operator*();
+		// };
 };
 
 #include "Vector.tpp" // Hack for templates

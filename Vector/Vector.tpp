@@ -206,3 +206,55 @@ void Vector<T>::insert(const size_t index, const T val) {
 	vec[index] = val;
 	++length;
 }
+
+template <typename T>
+VectorIterator<T> Vector<T>::begin() {
+	return VectorIterator<T>(vec);
+}
+
+template <typename T>
+VectorIterator<T> Vector<T>::end() {
+	return VectorIterator<T>(&vec[length - 1]);
+}
+
+// ---- ITERATOR
+
+template <class T>
+VectorIterator<T>::VectorIterator(T* vec) : vec(vec) {}
+
+template <class T>
+VectorIterator<T>::VectorIterator(const VectorIterator<T> & it) : vec(it.vec) {}
+
+template <class T>
+VectorIterator<T>& VectorIterator<T>::operator++() {
+	++vec;
+	return *this;
+}
+
+template <class T>
+VectorIterator<T> VectorIterator<T>::operator++(int) {
+	VectorIterator tmp(*this);
+	operator++();
+	return tmp;
+}
+
+template <class T>
+bool VectorIterator<T>::operator==(const VectorIterator<T> & other) const {
+	return vec == other.vec;
+}
+
+template <class T>
+bool VectorIterator<T>::operator!=(const VectorIterator<T> & other) const {
+	return vec != other.vec;
+}
+
+
+template <class T>
+T& VectorIterator<T>::operator*() {
+	return *vec;
+}
+
+template <class T>
+const T& VectorIterator<T>::operator*() const {
+	return *vec;
+}

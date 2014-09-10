@@ -1,6 +1,7 @@
 #include <cxxtest/TestSuite.h>
 #include <stdexcept>
 #include <string>
+#include <iostream>
 
 #include "Vector.hpp"
 
@@ -145,14 +146,27 @@ public:
 		}
 	}
 
-	void test_begin( void ) {
-		//TODO write testcase
+	void test_iterator_begin_and_end() {
+		Vector<int> v({2,3,5,99,42,0,2});
 
+		int i = 0;
+		// for (Vector<int>::iterator it = v.begin(); it != v.end(); ++it) {
+		for (VectorIterator<int> it = v.begin(); it != v.end(); ++it) {
+			TS_ASSERT_EQUALS(*it, v[i]);
+			i++;
+		}
+	}
+
+	void test_begin( void ) {
+		Vector<std::string> v({"a", "b", "c"});
+
+		TS_ASSERT_EQUALS(*v.begin(), "a");
 	}
 
 	void test_end( void ) {
-		//TODO write testcase
+		Vector<std::string> v({"a", "b", "c"});
 
+		TS_ASSERT_EQUALS(*v.end(), "c");
 	}
 
 	void test_find( void ) {
