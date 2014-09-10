@@ -1,12 +1,9 @@
-#include <cstdlib>
-#include <stdexcept> // Exceptions
-#include <type_traits>
-#include "Vector.hpp"
+//#include "Vector.hpp"
 
 template <typename T>
 void Vector<T>::init(const size_t s) {
-	cap = s;
 	vec = new T[s];
+	cap = s;
 }
 
 template <typename T>
