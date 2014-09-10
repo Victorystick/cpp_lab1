@@ -1,0 +1,325 @@
+0.1  MAKE IT HAPPEN
+--------------------------------------------------------------------------------
+:::: What does `$*` mean inside a makefile?
+--------------------------------------------------------------------------------
+
+Answer: The stem of the matched rule. (%.cpp("hello.cpp") -> "hello")
+
+--------------------------------------------------------------------------------
+:::: What is the purpose of `-Wall` and -g, when passed as arguments to g++?
+--------------------------------------------------------------------------------
+
+Answer: -Wall - enables all warnings
+        -g    - enable debugging information
+
+--------------------------------------------------------------------------------
+:::: What is the difference between an object file, and an executable?
+--------------------------------------------------------------------------------
+
+Answer: object file - includes binary code of a translation unit
+        executable  - same as object file, but linked with other
+                      object files
+
+--------------------------------------------------------------------------------
+
+
+
+
+
+0.2  HELLO WORLD
+-------------------------------------------------------------------------------
+:::: What is the purpose of `std::cout`, `std::cerr`, and `std::clog`,
+     respectively?
+-------------------------------------------------------------------------------
+
+Answer: cout - regular program output
+        cerr - program error messages
+        clog - standard logging stream
+
+-------------------------------------------------------------------------------
+
+
+
+
+0.3  TRAIN SPOTTING
+
+    int powerof (int x, int y) {
+      int res = 1;
+
+      for (int i = 0; i < y; ++i);
+        res *= x;
+
+      return res;
+    }
+
+    int main () {
+      int const a = 2;
+      int const b = 4;
+
+      int   x = powerof(a, b);
+      float y = 3.1415;
+
+      std::cout << a << "^" << b << " = " << x << ";\n";
+
+      if (y == 3.1415)
+        std::cout << y << " is equal to 3.1415!\n";
+      else
+        std::cout << y << " is not equal to 3.1415!\n";
+    }
+
+--------------------------------------------------------------------------------
+:::: Why does not `powerof` return the expected value (16), when invoked with 2 and 4?
+--------------------------------------------------------------------------------
+
+Answer: Because of the `;` at the end of the for-loop.
+
+--------------------------------------------------------------------------------
+:::: Why does not `y` compare equal to 3.1415?
+--------------------------------------------------------------------------------
+
+Answer: Because 3.1415 is a double.
+
+--------------------------------------------------------------------------------
+:::: Is there any difference in behavior if we compare `y` to 3.1415f, if so: why?
+--------------------------------------------------------------------------------
+
+Answer: The trailing `f` causes the literal to be interpreted as a float.
+
+--------------------------------------------------------------------------------
+:::: What is the recommended method to use when trying to determine if
+:::: two floating-point values are equal, and why?
+--------------------------------------------------------------------------------
+
+Answer: a - b < epsilon, where a, b and epsilon are floats
+        and epsilon has a very small value.
+
+--------------------------------------------------------------------------------
+
+
+0.4 DOES IT FIT
+
+int count_if_followed_by (char const * p, int len, char a, char b) {
+  int        count = 0;
+  char const * end = p + len;
+
+  while (p != end) {
+    if (*p == a && *(p+1) == b)
+      count += 1;
+
+    ++p;
+  }
+
+--------------------------------------------------------------------------------
+:::: Why is it important to test the boundary conditions of an implementation,
+     especially in the case of `count_if_followed_by`?
+--------------------------------------------------------------------------------
+
+Answer: Because of off-by-one errors, which occurs in the given code.
+        The loop is executed while pointer doesn't point at the last char,
+        but it references chars which aren't part of the target char sequence.
+
+--------------------------------------------------------------------------------
+
+
+
+0.5 WILL IT FLOAT (birth.cpp)
+
+class A {
+public:
+   A () {
+     std::cout << "default-constructor" << std::endl;
+   }
+
+   A (A const& src) {
+     std::cout << "copy-constructor" << std::endl;
+   }
+
+  ~A () {
+    std::cout << "destructor" << std::endl;
+  }
+
+   A(char const* s) {
+      std::cout << "some other constructor" << std::endl;
+   }
+
+   A& operator= (A const& src) {
+     std::cout << "the assignment operator" << std::endl;
+     return *this;
+   }
+};
+
+void no_ref(A a) {}
+void with_ref(const A & a) {}
+
+int main()
+{
+    A a("my name is a");
+
+    A b = a;          // what is the difference
+    A c(a);           // between these three
+    A d;              // forms of initialization?
+
+    d = a;
+
+      no_ref (a);     // will this copy the value of `a`?
+    with_ref (a);     // will this copy the value of `a`?
+
+    A *aa = new A[5];
+    delete aa;        // what will happen?
+    return 0;
+}
+
+--------------------------------------------------------------------------------
+:::: what different constructors are invoked an when?
+--------------------------------------------------------------------------------
+
+Answer: In order:
+        A(char const* s)
+
+        A (A const& src)
+        A (A const& src)
+        A ()
+
+        A& operator= (A const& src)
+
+        A (A const& src)
+        ~A ()
+
+        5 * A ()
+        5 * ~A ()
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+:::: will there be any temporaries created, if so; when?
+--------------------------------------------------------------------------------
+
+Answer: When an A is passed as value, in no_ref(a), a copy is created
+        and automatically destructed on return.
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+:::: when are the objects destructed, and why?
+--------------------------------------------------------------------------------
+
+Answer: If they aren not created using new, they will be destructed
+        when they leave the current scope, even in the face of exceptions.
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+:::: valgrind indicates that there is something wrong with birth.cpp; what, and
+:::: why?
+--------------------------------------------------------------------------------
+
+Answer:  Invalid free() / delete / delete[] / realloc().
+         `delete` is used when `delete[]` should have.
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+:::: What will happen if we try to free a dynamically allocated array
+:::: through `delete p` instead of `delete [] p`?
+--------------------------------------------------------------------------------
+
+Answer: The behaviour is undefined, but will probably lead to memory leaks.
+
+--------------------------------------------------------------------------------
+
+
+0.5 WILL IT FLOAT (bad_plumbing.cpp)
+
+struct Data {
+    int x, y, z;
+};
+
+Data ** foo(Data ** v, int x) {
+    for (int i = 0; i < x; i++)
+        if (v[i] != 0)
+            v[i] = new Data;
+    return v;
+}
+
+int main () {
+    const int size = 5;
+    Data ** v = new Data * [size];
+    foo(v, size);
+}
+
+--------------------------------------------------------------------------------
+:::: valgrind indicates that the program suffers from a few problems, which and
+:::: why?
+--------------------------------------------------------------------------------
+
+Answer: It compares unitinialized variables to 0, and a memory leak.
+
+--------------------------------------------------------------------------------
+:::: If you uncomment the entire if-block in foo, is there any difference in how much
+:::: memory that is leaked?
+--------------------------------------------------------------------------------
+
+Answer: Yes, even more memory is leaked,
+        since objects are created and never deleted.
+
+--------------------------------------------------------------------------------
+:::: If you change the last line of `main` to the following; why does
+:::: valgrind still issue diagnostics related to memory management?
+::::
+:::: Data ** p = foo (v, size);
+:::: delete [] p;
+--------------------------------------------------------------------------------
+
+Answer: Because the objects created in foo are still not deleted,
+        only the array is properly disposed of.
+
+--------------------------------------------------------------------------------
+
+
+
+0.6  THE SIMPLE CONTAINER
+--------------------------------------------------------------------------------
+:::: `operator[]` must in some cases be marked as `const`, but not always; when,
+:::: and why?
+--------------------------------------------------------------------------------
+
+Answer: If the Vector itself is const, then the method overloading the index
+        operator must also be const since it would otherwise be possible to
+        change the values of a const Vector.
+
+--------------------------------------------------------------------------------
+:::: The semantics of copying a UIntVector might not be trivial; why must we
+:::: manually implement the relevant code, instead of having the compiler generate
+:::: it for us?
+--------------------------------------------------------------------------------
+
+Answer: While the default is a shallow copy, it may sometimes be necessary
+        to perform a deep copy.
+
+--------------------------------------------------------------------------------
+
+
+
+0.7  THE TEMPLATE VECTOR
+--------------------------------------------------------------------------------
+:::: Iterating over a range of elements can be done with a range-based for-loop,
+:::: but the type of `source` must meet certain requirements; what are they?
+--------------------------------------------------------------------------------
+
+Answer: iterator....
+
+--------------------------------------------------------------------------------
+:::: The C++ Standard sometimes state that a type in the Standard Library is
+:::: "unspecified"; why do you think that is?
+--------------------------------------------------------------------------------
+
+Answer: ...
+
+--------------------------------------------------------------------------------
+
+
+
