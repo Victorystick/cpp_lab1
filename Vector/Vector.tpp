@@ -119,10 +119,21 @@ Vector<T>::~Vector() {
 }
 
 template <typename T>
-const Vector<T> & Vector<T>::operator=(Vector<T> temp) {
+const Vector<T> & Vector<T>::operator=(const Vector<T> & temp) {
+	copy(temp);
+
+	return *this;
+}
+
+template <typename T>
+const Vector<T> & Vector<T>::operator=(Vector<T> && temp) {
 	std::swap(length, temp.length);
 	std::swap(cap, temp.cap);
 	std::swap(vec, temp.vec);
+
+	temp.vec = nullptr;
+	temp.length = 0;
+	temp.cap = 0;
 
 	return *this;
 }

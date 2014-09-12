@@ -73,6 +73,38 @@ public:
 		}
 	}
 
+	void test_copy_assignment ( void ) {
+		Vector<int> v({2,3,5,99,42,0,2});
+		int * arr = v.vec;
+
+		Vector<int> w;
+		w = v; //Copy assignment
+		TS_ASSERT_EQUALS(w.length, 7)
+		TS_ASSERT_EQUALS(v.length, 7)
+		TS_ASSERT_DIFFERS(w.vec, arr)
+		TS_ASSERT_EQUALS(v.vec, arr)
+
+		// Verify values
+		for (int i=0; i<v.size(); i++) {
+			TS_ASSERT_EQUALS(w[i], v[i])
+		}
+	}
+
+	void test_move_assignment ( void ) {
+		Vector<int> v({2,3,5,99,42,0,2});
+		int * arr = v.vec;
+
+		Vector<int> w;
+		w = std::move(v);
+		//TODO check w have stolen the array from v
+		// Includes checking same adress and that v does no longer have access to it.
+		TS_ASSERT_EQUALS(w.length, 7)
+		TS_ASSERT_EQUALS(w.vec, arr)
+
+		TS_ASSERT_EQUALS(v.length, 0)
+		TS_ASSERT_DIFFERS(v.vec, arr)
+	}
+
 	void test_push_back( void ) {
 		Vector<int> v;
 		v.push_back(1);
