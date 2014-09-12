@@ -311,7 +311,8 @@ Answer: While the default is a shallow copy, it may sometimes be necessary
 --------------------------------------------------------------------------------
 
 Answer: The type iterated over must implement a begin() and a end() method.
-        These methods should return iterators, meaning a type that implements dereference, not-equals operator and ++-operator.
+        These methods should return iterators, meaning a type that implements 
+        dereference, not-equals operator and ++-operator.
 
 --------------------------------------------------------------------------------
 :::: The C++ Standard sometimes state that a type in the Standard Library is
@@ -319,7 +320,8 @@ Answer: The type iterated over must implement a begin() and a end() method.
 --------------------------------------------------------------------------------
 
 Answer: Backwards-compatability with C while protecting the mistakes of said
-        language. If it is unspecified, any behaviour observed by a programmer outside of the relevant specification is not to be relied on.
+        language. If it is unspecified, any behaviour observed by a programmer 
+        outside of the relevant specification is not to be relied on.
 
 --------------------------------------------------------------------------------
 
