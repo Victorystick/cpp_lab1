@@ -310,14 +310,16 @@ Answer: While the default is a shallow copy, it may sometimes be necessary
 :::: but the type of `source` must meet certain requirements; what are they?
 --------------------------------------------------------------------------------
 
-Answer: iterator....
+Answer: The type iterated over must implement a begin() and a end() method.
+        These methods should return iterators, meaning a type that implements dereference, not-equals operator and ++-operator.
 
 --------------------------------------------------------------------------------
 :::: The C++ Standard sometimes state that a type in the Standard Library is
 :::: "unspecified"; why do you think that is?
 --------------------------------------------------------------------------------
 
-Answer: ...
+Answer: Backwards-compatability with C while protecting the mistakes of said
+        language. If it is unspecified, any behaviour observed by a programmer outside of the relevant specification is not to be relied on.
 
 --------------------------------------------------------------------------------
 
