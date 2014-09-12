@@ -8,21 +8,6 @@
 #include <type_traits>
 
 template <class T>
-class VectorIterator :
-public std::iterator<std::input_iterator_tag, T> {
-	T* vec;
-public:
-	VectorIterator(T* vec);
-	VectorIterator(const VectorIterator & it);
-	VectorIterator& operator++();
-	VectorIterator operator++(int);
-	bool operator==(const VectorIterator & other) const;
-	bool operator!=(const VectorIterator & other) const;
-	T& operator*();
-	const T& operator*() const;
-};
-
-template <class T>
 class Vector {
 	private:
 		size_t length;
@@ -45,8 +30,7 @@ class Vector {
 		Vector(); //Default
 		explicit Vector(const size_t);
 		//Explicit or "Vector v = 5;" is valid, but makes little sense when read.
-		explicit Vector(std::initializer_list<T>);
-		//Does not really need to be explicit.
+		Vector(std::initializer_list<T>);
 
 		// Initial size and value.
 		Vector(const size_t, const T);
@@ -63,6 +47,8 @@ class Vector {
 
 		// Destructor
 		~Vector();
+
+		typedef T* iterator;
 
 		// Assignment
 		const Vector & operator=(Vector temp);
@@ -87,11 +73,11 @@ class Vector {
 
 		size_t capacity() const;
 
-		VectorIterator<T> begin();
+		iterator begin();
 
-		VectorIterator<T> end();
+		iterator end();
 
-		VectorIterator<T> find(T const&);
+		iterator find(T const&);
 
 		void print();
 
@@ -115,17 +101,20 @@ class Vector {
 			std::copy(v, v+N, vec);
 		}
 
-		// class iterator {
-		// 	T* vec;
-		// public:
-		// 	iterator(T* vec);
-		// 	iterator(const T & it);
-		// 	iterator& operator++();
-		// 	iterator operator++(int);
-		// 	bool operator==(const iterator & other) const;
-		// 	bool operator!=(const iterator & other) const;
-		// 	T& operator*();
-		// };
+		/*class iterator :
+		public std::iterator<std::random_access_iterator_tag, T> {
+			T* vec;
+		public:
+			iterator(T* vec);
+			iterator(const Vector<T>::iterator & it);
+			Vector<T>::iterator & operator++();
+			Vector<T>::iterator& operator--();
+			iterator operator++(int);
+			bool operator==(const iterator & other) const;
+			bool operator!=(const iterator & other) const;
+			T& operator*();
+			const T& operator*() const;
+		};*/
 };
 
 #include "Vector.tpp" // Hack for templates
