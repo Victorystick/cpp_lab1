@@ -66,12 +66,20 @@ UIntVector::~UIntVector() {
 }
 
 // assignment
-const UIntVector & UIntVector::operator=(UIntVector temp) {
+const UIntVector & UIntVector::operator=(const UIntVector & temp) {
+	copy(temp);
+
+	return *this;
+}
+
+const UIntVector & UIntVector::operator=(UIntVector && temp) {
 	std::swap(length, temp.length);
 	std::swap(vec, temp.vec);
 
 	return *this;
 }
+
+
 
 unsigned int & UIntVector::get(const size_t index) const {
 	if (index >= length) {

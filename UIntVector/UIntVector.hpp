@@ -30,7 +30,8 @@ class UIntVector {
 		~UIntVector();
 
 		// Assignment
-		const UIntVector & operator=(UIntVector temp);
+		const UIntVector & operator=(const UIntVector & temp);
+		const UIntVector & operator=(UIntVector &&);
 
 		size_t size() const { return length; }
 
