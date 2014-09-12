@@ -226,66 +226,22 @@ void Vector<T>::erase(const size_t index) {
 }
 
 template <typename T>
-VectorIterator<T> Vector<T>::begin() {
-	return VectorIterator<T>(vec);
+typename Vector<T>::iterator Vector<T>::begin() {
+	return vec;
 }
 
 template <typename T>
-VectorIterator<T> Vector<T>::end() {
-	return VectorIterator<T>(&vec[length - 1]);
+typename Vector<T>::iterator Vector<T>::end() {
+	return &vec[length];
 }
 
 template <typename T>
-VectorIterator<T> Vector<T>::find(const T & val) {
-	VectorIterator<T> it = begin();
-
-	for (; it != end(); ++it) {
+typename Vector<T>::iterator Vector<T>::find(const T & val) {
+	for (auto it = begin(); it != end(); ++it) {
 		if (*it == val) {
 			return it;
 		}
 	}
 
-	return it;
-}
-
-// ---- ITERATOR
-
-template <class T>
-VectorIterator<T>::VectorIterator(T* vec) : vec(vec) {}
-
-template <class T>
-VectorIterator<T>::VectorIterator(const VectorIterator<T> & it) : vec(it.vec) {}
-
-template <class T>
-VectorIterator<T>& VectorIterator<T>::operator++() {
-	++vec;
-	return *this;
-}
-
-template <class T>
-VectorIterator<T> VectorIterator<T>::operator++(int) {
-	VectorIterator tmp(*this);
-	operator++();
-	return tmp;
-}
-
-template <class T>
-bool VectorIterator<T>::operator==(const VectorIterator<T> & other) const {
-	return vec == other.vec;
-}
-
-template <class T>
-bool VectorIterator<T>::operator!=(const VectorIterator<T> & other) const {
-	return vec != other.vec;
-}
-
-
-template <class T>
-T& VectorIterator<T>::operator*() {
-	return *vec;
-}
-
-template <class T>
-const T& VectorIterator<T>::operator*() const {
-	return *vec;
+	return end();
 }
