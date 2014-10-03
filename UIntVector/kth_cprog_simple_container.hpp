@@ -1,5 +1,8 @@
 #include <algorithm>
 
+#ifndef JOC_UIntVector
+#define JOC_UIntVector
+
 class UIntVector {
 	private:
 		size_t length;
@@ -61,3 +64,7 @@ class UIntVector {
 		unsigned int & operator[](const size_t);
 		unsigned int operator[](const size_t) const;
 };
+
+#include "kth_cprog_simple_container.kpp"
+
+#endif

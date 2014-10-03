@@ -51,8 +51,8 @@ class Vector {
 		typedef T* iterator;
 
 		// Assignment
-		const Vector & operator=(Vector temp);
-
+		const Vector<T> & operator=(const Vector<T> & temp);
+		const Vector<T> & operator=(Vector<T> &&);
 		T & operator[](const size_t);
 
 		T operator[](const size_t) const;
