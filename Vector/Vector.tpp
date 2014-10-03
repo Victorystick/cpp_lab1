@@ -108,18 +108,27 @@ Vector<T>::Vector(Vector<T>&& v) {
 
 	length = v.length;
 	vec = v.vec;
+	cap = v.cap;
 
 	v.length = 0;
-	v.vec = 0;
+	v.vec = nullptr;
+	v.cap = 0;
 }
 
 template <typename T>
 Vector<T>::~Vector() {
-	delete[] vec;
+	if (vec != nullptr) {
+		delete[] vec;
+	}
 }
 
 template <typename T>
 const Vector<T> & Vector<T>::operator=(const Vector<T> & temp) {
+	if (temp.vec == vec) {
+		return *this;
+	}
+
+	delete[] vec;
 	copy(temp);
 
 	return *this;
@@ -127,9 +136,15 @@ const Vector<T> & Vector<T>::operator=(const Vector<T> & temp) {
 
 template <typename T>
 const Vector<T> & Vector<T>::operator=(Vector<T> && temp) {
-	std::swap(length, temp.length);
-	std::swap(cap, temp.cap);
-	std::swap(vec, temp.vec);
+	if (temp.vec == vec) {
+		return *this;
+	}
+
+	delete[] vec;
+
+	length = temp.length;
+	vec = temp.vec;
+	cap = temp.cap;
 
 	temp.vec = nullptr;
 	temp.length = 0;
