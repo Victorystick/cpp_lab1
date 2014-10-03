@@ -96,4 +96,35 @@ public:
 		TS_ASSERT_EQUALS(v.length, 0)
 		TS_ASSERT_DIFFERS(v.vec, arr)
 	}
+
+	void test_kattis2 ( void ) {
+		UIntVector A({1, 2, 3, 4});
+		UIntVector B(10);
+		TS_ASSERT_EQUALS(A.size(), 4)
+
+		UIntVector C(0);
+		C = A;
+		A = B;
+		UIntVector D = C;
+
+		TS_ASSERT_EQUALS(A.size(), 10)
+		TS_ASSERT_EQUALS(B.size(), 10)
+		TS_ASSERT_EQUALS(C.size(), 4)
+
+		A[1] = 10;
+		B[2] = 11;
+		C[3] = 12;
+
+		TS_ASSERT_EQUALS(A[1], 10)
+		TS_ASSERT_EQUALS(B[2], 11)
+		TS_ASSERT_EQUALS(C[3], 12)
+
+		A.reset();
+		TS_ASSERT_EQUALS(A.size(), 10)
+
+		C = std::move(A);
+
+		TS_ASSERT_EQUALS(A.length, 0);
+		TS_ASSERT_EQUALS(A.vec, nullptr);
+	}
 };
