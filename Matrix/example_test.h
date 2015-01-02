@@ -281,6 +281,19 @@ public:
         TS_ASSERT_EQUALS( m[ 1 ][ 1 ], 3 );
     }
 
+    void testScalarMultAndSub() {
+        Matrix m (2);
+
+        m = m * 3;
+
+        m = ones(2) - m;
+
+        TS_ASSERT_EQUALS( m[ 0 ][ 0 ], -2 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 1 ], 1 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 0 ], 1 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 1 ], -2 );
+    }
+
     void testMultiplication() {
         Matrix m = a_matrix_3by2();
         Matrix n;
