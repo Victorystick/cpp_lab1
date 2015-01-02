@@ -29,20 +29,31 @@ public:
         TS_ASSERT( m[ 0 ][ 1 ] == 0 );
 
         m = a_matrix_3by2();
-        TS_ASSERT( m[ 0 ][ 0 ] == 1 );
-        TS_ASSERT( m[ 0 ][ 1 ] == 3 );
-        TS_ASSERT( m[ 0 ][ 2 ] == 5 );
-        TS_ASSERT( m[ 1 ][ 0 ] == 0 );
-        TS_ASSERT( m[ 1 ][ 1 ] == 2 );
-        TS_ASSERT( m[ 1 ][ 2 ] == 0 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 1 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 1 ], 3 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 2 ], 5 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 1 ], 2 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 2 ], 0 );
 
         init_matrix(m, "  [ 1 3 5 ; 0 2 1 ]");
-        TS_ASSERT( m[ 0 ][ 0 ] == 1 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 1 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 1 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 1 ], 3 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 2 ], 5 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 1 ], 2 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 2 ], 1 );
 
         std::stringstream ss;
         ss << m;
         ss >> m;
-        TS_ASSERT( m[ 0 ][ 0 ] == 1 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 1 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 1 ], 3 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 2 ], 5 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 1 ], 2 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 2 ], 1 );
 
         TS_ASSERT_THROWS( m[-1][0] , std::out_of_range);
     }
