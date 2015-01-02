@@ -5,6 +5,7 @@
 #include "/info/cprog09/cxxtest/cxxtest/TestSuite.h"
 #include <fstream>
 #include <sstream>
+#include <climits>
 
 class MatrixTestSuite : public CxxTest::TestSuite
 {
@@ -18,7 +19,7 @@ class MatrixTestSuite : public CxxTest::TestSuite
 
     void init_matrix( Matrix& m, const char* file )
     {
-        std::stringstream stream( file );   
+        std::stringstream stream( file );
         stream >> m;
     }
 
@@ -60,6 +61,24 @@ public:
 
     void testOperatorAssign() {
         Matrix m(2,4);
+        m[ 0 ][ 0 ] = 99;
+        m[ 0 ][ 1 ] = 0;
+        m[ 0 ][ 2 ] = INT_MAX;
+        m[ 0 ][ 3 ] = 42;
+
+        m[ 1 ][ 0 ] = -99;
+        m[ 1 ][ 1 ] = -0;
+        m[ 1 ][ 2 ] = INT_MIN;
+        m[ 1 ][ 3 ] = -42;
+
+        TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 99 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 1 ], 0 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 2 ], INT_MAX );
+        TS_ASSERT_EQUALS( m[ 0 ][ 3 ], 42 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 0 ], -99 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 1 ], 0 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 2 ], INT_MIN );
+        TS_ASSERT_EQUALS( m[ 1 ][ 3 ], -42 );
 
     }
 };
