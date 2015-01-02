@@ -118,6 +118,23 @@ public:
 
         TS_ASSERT_EQUALS(ss.str(), init_string);
     }
+
+    void testAdd() {
+        Matrix m = a_matrix_3by2();
+        Matrix n;
+        stringstream(" [ 99 -34 0 ; 2 78 32 ] ") >> n;
+
+        Matrix o = m + n;
+        Matrix p = n + m;
+        TS_ASSERT_EQUALS(o, p);
+
+        TS_ASSERT_EQUALS( o[ 0 ][ 0 ], 100 );
+        TS_ASSERT_EQUALS( o[ 0 ][ 1 ], -31 );
+        TS_ASSERT_EQUALS( o[ 0 ][ 2 ], 5 );
+        TS_ASSERT_EQUALS( o[ 2 ][ 1 ], 2 );
+        TS_ASSERT_EQUALS( o[ 2 ][ 0 ], 80 );
+        TS_ASSERT_EQUALS( o[ 2 ][ 2 ], 32 );
+    }
 };
 
 #endif
