@@ -34,6 +34,20 @@ class MatrixTestSuite : public CxxTest::TestSuite
         stream >> m;
     }
 
+    Matrix ones(std::size_t size) {
+        Matrix m (size, size);
+
+        for (int i = 0; i < size; ++i)
+        {
+            for (int j = 0; j < size; ++j)
+            {
+                m[i][j] = 1;
+            }
+        }
+
+        return m;
+    }
+
 public:
     void testIdentityConstructor() {
         Matrix m (3);
@@ -61,6 +75,12 @@ public:
         Matrix m (17);
 
         Matrix n = m;
+
+        TS_ASSERT_EQUALS( n, m );
+
+        m = a_matrix_3by2();
+
+        n = m;
 
         TS_ASSERT_EQUALS( n, m );
     }
@@ -271,6 +291,24 @@ public:
         i = i - i;
 
         TS_ASSERT_EQUALS( i, Matrix(2, 2) );
+
+        std::stringstream ss2(" [ 1 1 1 ; 1 2 2 ; 1 2 2 ]");
+
+        i = Matrix(3);
+
+        ss2 >> i;
+
+        i = i - Matrix(3);
+
+        TS_ASSERT_EQUALS( i[ 0 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( i[ 0 ][ 1 ], 1 );
+        TS_ASSERT_EQUALS( i[ 0 ][ 2 ], 1 );
+        TS_ASSERT_EQUALS( i[ 1 ][ 0 ], 1 );
+        TS_ASSERT_EQUALS( i[ 1 ][ 1 ], 1 );
+        TS_ASSERT_EQUALS( i[ 1 ][ 2 ], 2 );
+        TS_ASSERT_EQUALS( i[ 2 ][ 0 ], 1 );
+        TS_ASSERT_EQUALS( i[ 2 ][ 1 ], 2 );
+        TS_ASSERT_EQUALS( i[ 2 ][ 2 ], 1 );
     }
 
     void testScalarMult() {
@@ -322,15 +360,38 @@ public:
     void testMultiplication() {
         Matrix m = a_matrix_3by2();
         Matrix n;
-        std::stringstream ss(" [ 99 -1 ; -34 -1 ; 1 2 ] ");
+        std::stringstream ss(" [ 99 -1 ; -34 -1 ; 1 -2 ] ");
         ss >> n;
 
         Matrix o = m * n;
 
         TS_ASSERT_EQUALS( o[ 0 ][ 0 ], 2 );
         TS_ASSERT_EQUALS( o[ 0 ][ 1 ], -14 );
-        TS_ASSERT_EQUALS( o[ 0 ][ 2 ], -68 );
-        TS_ASSERT_EQUALS( o[ 2 ][ 1 ], -2 );
+        TS_ASSERT_EQUALS( o[ 1 ][ 0 ], -68 );
+        TS_ASSERT_EQUALS( o[ 1 ][ 1 ], -2 );
+
+        std::stringstream ss2(" [ 1 1 1 ; 1 2 2 ; 1 2 2 ]");
+        Matrix p;
+
+        ss2 >> p;
+
+        p = p * p;
+
+        TS_ASSERT_EQUALS( p[ 0 ][ 0 ], 3 );
+        TS_ASSERT_EQUALS( p[ 0 ][ 1 ], 5 );
+        TS_ASSERT_EQUALS( p[ 0 ][ 2 ], 5 );
+        TS_ASSERT_EQUALS( p[ 1 ][ 0 ], 5 );
+        TS_ASSERT_EQUALS( p[ 1 ][ 1 ], 9 );
+        TS_ASSERT_EQUALS( p[ 1 ][ 2 ], 9 );
+        TS_ASSERT_EQUALS( p[ 2 ][ 0 ], 5 );
+        TS_ASSERT_EQUALS( p[ 2 ][ 1 ], 9 );
+        TS_ASSERT_EQUALS( p[ 2 ][ 2 ], 9 );
+
+        Matrix i = ones(2);
+
+        i = i * i;
+
+        TS_ASSERT_EQUALS( i[ 1 ][ 0 ], 2);
     }
 
 };

@@ -13,7 +13,7 @@ public:
     }
     T& operator[](unsigned int i) throw(std::out_of_range) {
         return this->at( i );
-    }    
+    }
 };
 
 //using namespace std;
@@ -22,7 +22,7 @@ class Matrix
 {
  public:
     typedef unsigned int index;
-    
+
     class matrix_row : private Vector< int >
     {
     public:
@@ -31,34 +31,34 @@ class Matrix
     private:
         friend std::istream& operator>>( std::istream&, Matrix& );
     };
-    
+
     Matrix( );
     Matrix( std::size_t, std::size_t );
     Matrix( const Matrix& );
-    Matrix(int size);
+    explicit Matrix( std::size_t ); // was: non-explicit, (int size)
     ~Matrix( );
-    
+
     Matrix& operator= ( const Matrix& );
     Matrix operator+ ( const Matrix& ) const;
     Matrix operator* ( const Matrix& ) const;
     Matrix operator* ( int ) const;
-    Matrix operator-( const Matrix& ) const;
-    Matrix operator-( ) const;
-    
+    Matrix operator- ( const Matrix& ) const;
+    Matrix operator- ( ) const;
+
     Matrix& transpose( );
-    
+
     matrix_row& operator[]( index i );
     const matrix_row& operator[]( index i ) const;
-    
+
     std::size_t rows() const;
     std::size_t cols() const;
-    
+
  protected:
  private:
     Vector< matrix_row >        m_vectors;
     std::size_t                 m_rows;
     std::size_t                 m_cols;
-    
+
     void add_row( );            // Non mandatory help function
     friend std::istream& operator>> ( std::istream&, Matrix& );
 };

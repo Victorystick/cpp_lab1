@@ -1,8 +1,8 @@
 Matrix flaws
 ============
 
-* [ ] 1:
-* [ ] 2:
+* [x] 1: { matrix1 } - { matrix2 } // First row and column are zeroes
+* [x] 2: { matrix1 } * { matrix2 } // Last value of first column is 1 too large
 * [x] 3: stream >> { empty matrix } // Results in doubled values
 * [ ] 4:
 * [x] 5: stream << { matrix } // Adds extra rows and columns
