@@ -57,6 +57,7 @@ public:
         TS_ASSERT_EQUALS( m[ 1 ][ 2 ], 1 );
 
         TS_ASSERT_THROWS( m[-1][0] , std::out_of_range);
+        TS_ASSERT_THROWS( m[ 13 ][ 37 ] , std::out_of_range);
     }
 
     void testOperatorAssign() {
