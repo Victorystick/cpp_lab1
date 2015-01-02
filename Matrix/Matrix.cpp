@@ -95,6 +95,30 @@ Matrix Matrix::operator+ ( const Matrix& other) const {
 	return res;
 }
 
+Matrix Matrix::operator- ( const Matrix& other) const {
+	if (other.cols() != cols() || other.rows() != rows()) {
+		throw std::out_of_range("Incompatible sizes");
+	}
+
+	Matrix res (cols(), rows());
+	for (index i = 0; i < rows(); ++i) {
+		for (index j = 0; j < cols(); ++j) {
+			res[j][i] = m_vectors[j][i] - other[j][i];
+		}
+	}
+	return res;
+}
+
+Matrix Matrix::operator* ( int coefficient) const {
+	Matrix res (cols(), rows());
+	for (index i = 0; i < rows(); ++i) {
+		for (index j = 0; j < cols(); ++j) {
+			res[j][i] = m_vectors[j][i] * coefficient;
+		}
+	}
+	return res;
+}
+
 Matrix & Matrix::operator=(const Matrix & m) {
 	m_vectors = Vector<matrix_row>(m.rows());
 
