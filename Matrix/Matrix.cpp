@@ -162,8 +162,7 @@ Matrix Matrix::operator-() const {
 }
 
 std::istream& operator>> ( std::istream& in, Matrix& m) {
-	m.m_cols = 1;
-	m.m_rows = 1;
+	// Clear internal vectors.
 	m.m_vectors = Vector<Matrix::matrix_row>();
 
 	Matrix::matrix_row row;
@@ -180,8 +179,9 @@ std::istream& operator>> ( std::istream& in, Matrix& m) {
 		row.push_back(num);
 		in >> std::ws;
 		chr = in.peek();
-		m.m_cols += 1;
 	}
+
+	m.m_cols = row.size();
 
 	m.m_vectors.push_back(row);
 
@@ -196,6 +196,8 @@ std::istream& operator>> ( std::istream& in, Matrix& m) {
 		// eat ';' or ']'
 		in >> chr;
 	}
+
+	m.m_rows = m.m_vectors.size();
 
 	return in;
 }

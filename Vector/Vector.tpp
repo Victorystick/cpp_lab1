@@ -31,7 +31,11 @@ template <typename T>
 void Vector<T>::copy(const Vector<T> & other) {
 	length = other.length;
 
-	if (length > cap) {
+	if (vec == nullptr || length > cap) {
+		if (vec != nullptr) {
+			delete vec;
+		}
+
 		init(length);
 	}
 
@@ -95,8 +99,10 @@ Vector<T>::Vector(std::initializer_list<T> l) {
 
 // copy
 template <typename T>
-Vector<T>::Vector(const Vector<T> & v) : cap(0) {
+Vector<T>::Vector(const Vector<T> & v) {
 	is_ok();
+
+	init(v.size());
 
 	copy(v);
 }
@@ -123,32 +129,31 @@ Vector<T>::~Vector() {
 }
 
 template <typename T>
-const Vector<T> & Vector<T>::operator=(const Vector<T> & temp) {
-	if (temp.vec == vec) {
+const Vector<T> & Vector<T>::operator=(const Vector<T> & other) {
+	if (other.vec == vec) {
 		return *this;
 	}
 
-	delete[] vec;
-	copy(temp);
+	copy(other);
 
 	return *this;
 }
 
 template <typename T>
-const Vector<T> & Vector<T>::operator=(Vector<T> && temp) {
-	if (temp.vec == vec) {
+const Vector<T> & Vector<T>::operator=(Vector<T> && other) {
+	if (other.vec == vec) {
 		return *this;
 	}
 
 	delete[] vec;
 
-	length = temp.length;
-	vec = temp.vec;
-	cap = temp.cap;
+	length = other.length;
+	vec = other.vec;
+	cap = other.cap;
 
-	temp.vec = nullptr;
-	temp.length = 0;
-	temp.cap = 0;
+	other.vec = nullptr;
+	other.length = 0;
+	other.cap = 0;
 
 	return *this;
 }
