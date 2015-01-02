@@ -63,6 +63,12 @@ public:
         Matrix n = m;
 
         TS_ASSERT_EQUALS( n, m );
+
+        m = a_matrix_3by2();
+
+        n = m;
+
+        TS_ASSERT_EQUALS( n, m );
     }
 
     void testZeroMatrix() {
