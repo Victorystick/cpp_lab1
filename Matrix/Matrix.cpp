@@ -119,6 +119,23 @@ Matrix Matrix::operator* ( int coefficient) const {
 	return res;
 }
 
+Matrix Matrix::operator* (const Matrix & m) const {
+	if (m.rows() != cols()) {
+		throw std::out_of_range("Incompatible matrices"); //std::domain_error?
+	}
+
+	Matrix res (m.cols(), rows());
+	for (index k = 0; k < res.cols(); ++k) {
+		for (index i = 0; i < rows(); ++i) {
+			for (index j = 0; j < cols(); ++j) {
+				res[i][k] += m_vectors[i][j] * m[j][k];
+			}
+		}
+	}
+
+	return res;
+}
+
 Matrix & Matrix::operator=(const Matrix & m) {
 	m_vectors = Vector<matrix_row>(m.rows());
 
