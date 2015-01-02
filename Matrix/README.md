@@ -3,9 +3,9 @@ Matrix flaws
 
 * [x] 1: { matrix1 } - { matrix2 } // First row and column are zeroes
 * [x] 2: { matrix1 } * { matrix2 } // Last value of first column is 1 too large
-* [x] 3: stream >> { empty matrix } // Results in doubled values
+* [x] 3: { matrix1 } = { matrix2 } // Copy-assign doubles values
 * [ ] 4:
-* [x] 5: stream << { matrix } // Adds extra rows and columns
+* [x] 5: stream >> { matrix } // Initializes as size 3 identity, and attempts to copy values.
 * [x] 6: { matrix }.transpose() // matrix[0][0] was set to 0
 * [x] 7: { matrix1 } + { matrix2 } // If one of the elements being added is 0, the result is also 0.
 * [x] 8: { matrix1 } + { matrix2 } // If the element of the first matrix is 0, the result is also 0.
