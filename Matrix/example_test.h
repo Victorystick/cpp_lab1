@@ -204,6 +204,35 @@ public:
         TS_ASSERT_EQUALS( o[ 1 ][ 0 ], 2 );
         TS_ASSERT_EQUALS( o[ 1 ][ 1 ], 80 );
         TS_ASSERT_EQUALS( o[ 1 ][ 2 ], 32 );
+
+        //Addition of 0-sized matrix
+        Matrix x(0,0);
+        TS_ASSERT_THROWS( x+m );
+        x = x+x;
+
+        //Addition of 1-sized matrix
+        x = Matrix(1, 1);
+        TS_ASSERT_THROWS(x+m);
+        x[0][0] = 1;
+        x = x + x;
+        TS_ASSERT_EQUALS(x[0][0], 2);
+
+
+        //Addition of square matricies
+        x = Matrix(3);
+        y = x;
+        y.transpose();
+
+        Matrix z = x+y;
+        TS_ASSERT_EQUALS( o[ 0 ][ 0 ], 2 );
+        TS_ASSERT_EQUALS( o[ 0 ][ 1 ], 0 );
+        TS_ASSERT_EQUALS( o[ 0 ][ 2 ], 0 );
+        TS_ASSERT_EQUALS( o[ 1 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( o[ 1 ][ 1 ], 2 );
+        TS_ASSERT_EQUALS( o[ 1 ][ 2 ], 0 );
+        TS_ASSERT_EQUALS( o[ 2 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( o[ 2 ][ 1 ], 0 );
+        TS_ASSERT_EQUALS( o[ 2 ][ 2 ], 2 );
     }
 
     void testSub() {
