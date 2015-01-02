@@ -85,6 +85,15 @@ public:
         TS_ASSERT_EQUALS( n, m );
     }
 
+    void testCopyAssignment() {
+        Matrix m;
+        Matrix i ( 2 );
+
+        m = i; // copy-assign
+
+        TS_ASSERT_EQUALS( m, i );
+    }
+
     void testZeroMatrix() {
         Matrix m (3, 3);
         // m *= 0;
@@ -218,6 +227,9 @@ public:
         TS_ASSERT_EQUALS( n[ 0 ][ 1 ], m[ 0 ][ 1 ] );
         TS_ASSERT_EQUALS( n[ 1 ][ 0 ], m[ 1 ][ 0 ] );
         TS_ASSERT_EQUALS( n[ 1 ][ 1 ], m[ 1 ][ 1 ] );
+
+        TS_ASSERT_EQUALS( n.cols(), m.rows() );
+        TS_ASSERT_EQUALS( n.rows(), m.cols() );
     }
 
     void testAdd() {
@@ -271,9 +283,17 @@ public:
 
         TS_ASSERT_EQUALS( i + just_1, result );
 
-        TS_ASSERT_EQUALS( (i + just_1)[ 0 ][ 0 ], 2 );
-        TS_ASSERT_EQUALS( (i + i)[ 0 ][ 0 ], 2 );
+        result = i + just_1;
 
+        TS_ASSERT_EQUALS( result[ 0 ][ 0 ], 2 );
+        TS_ASSERT_EQUALS( result[ 0 ][ 1 ], 0 );
+        TS_ASSERT_EQUALS( result[ 0 ][ 2 ], 0 );
+        TS_ASSERT_EQUALS( result[ 1 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( result[ 1 ][ 1 ], 1 );
+        TS_ASSERT_EQUALS( result[ 1 ][ 2 ], 0 );
+        TS_ASSERT_EQUALS( result[ 2 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( result[ 2 ][ 1 ], 0 );
+        TS_ASSERT_EQUALS( result[ 2 ][ 2 ], 1 );
     }
 
     void testSub() {
