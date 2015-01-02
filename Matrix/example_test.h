@@ -57,6 +57,14 @@ public:
         TS_ASSERT_THROWS( m[ 0 ][ 3 ], std::out_of_range);
     }
 
+    void testCopyConstructor() {
+        Matrix m (17);
+
+        Matrix n = m;
+
+        TS_ASSERT_EQUALS( n, m );
+    }
+
     void testZeroMatrix() {
         Matrix m (3, 3);
         // m *= 0;
@@ -222,6 +230,17 @@ public:
         i = i - i;
 
         TS_ASSERT_EQUALS( i, Matrix(2, 2) );
+    }
+
+    void testScalarMult() {
+        Matrix m (2);
+
+        m = m * 3;
+
+        TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 3 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 1 ], 0 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 1 ], 3 );
     }
 
     void testMultiplication() {
