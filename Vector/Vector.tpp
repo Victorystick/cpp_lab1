@@ -154,7 +154,7 @@ const Vector<T> & Vector<T>::operator=(Vector<T> && temp) {
 }
 
 template <typename T>
-T & Vector<T>::get(const size_t index) const {
+T & Vector<T>::operator[](const size_t index) {
 	if (index >= length) {
 		throw std::out_of_range ("Vector index is out of bounds.");
 	}
@@ -162,13 +162,11 @@ T & Vector<T>::get(const size_t index) const {
 }
 
 template <typename T>
-T & Vector<T>::operator[](const size_t index) {
-	return get(index);
-}
-
-template <typename T>
-T Vector<T>::operator[](const size_t index) const {
-	return get(index);
+const T & Vector<T>::operator[](const size_t index) const {
+	if (index >= length) {
+		throw std::out_of_range ("Vector index is out of bounds.");
+	}
+	return vec[index];
 }
 
 template <typename T>
