@@ -35,7 +35,7 @@ class Matrix
     Matrix( );
     Matrix( std::size_t, std::size_t );
     Matrix( const Matrix& );
-    Matrix( std::size_t ); // was: int size
+    explicit Matrix( std::size_t ); // was: non-explicit, (int size)
     ~Matrix( );
 
     Matrix& operator= ( const Matrix& );
