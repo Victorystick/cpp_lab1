@@ -230,6 +230,24 @@ public:
         i = i - i;
 
         TS_ASSERT_EQUALS( i, Matrix(2, 2) );
+
+        std::stringstream ss2(" [ 1 1 1 ; 1 2 2 ; 1 2 2 ]");
+
+        i = Matrix(3);
+
+        ss2 >> i;
+
+        i = i - Matrix(3);
+
+        TS_ASSERT_EQUALS( i[ 0 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( i[ 0 ][ 1 ], 1 );
+        TS_ASSERT_EQUALS( i[ 0 ][ 2 ], 1 );
+        TS_ASSERT_EQUALS( i[ 1 ][ 0 ], 1 );
+        TS_ASSERT_EQUALS( i[ 1 ][ 1 ], 1 );
+        TS_ASSERT_EQUALS( i[ 1 ][ 2 ], 2 );
+        TS_ASSERT_EQUALS( i[ 2 ][ 0 ], 1 );
+        TS_ASSERT_EQUALS( i[ 2 ][ 1 ], 2 );
+        TS_ASSERT_EQUALS( i[ 2 ][ 2 ], 1 );
     }
 
     void testScalarMult() {
@@ -255,8 +273,8 @@ public:
 
         TS_ASSERT_EQUALS( o[ 0 ][ 0 ], 2 );
         TS_ASSERT_EQUALS( o[ 0 ][ 1 ], -14 );
-        TS_ASSERT_EQUALS( o[ 0 ][ 2 ], -68 );
-        TS_ASSERT_EQUALS( o[ 2 ][ 1 ], -2 );
+        TS_ASSERT_EQUALS( o[ 1 ][ 0 ], -68 );
+        TS_ASSERT_EQUALS( o[ 1 ][ 1 ], -2 );
     }
 
 };
