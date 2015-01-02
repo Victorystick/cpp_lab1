@@ -48,6 +48,9 @@ public:
         TS_ASSERT_EQUALS( m[ 2 ][ 1 ], 0 );
         TS_ASSERT_EQUALS( m[ 2 ][ 2 ], 1 );
 
+        TS_ASSERT_EQUALS( m.rows(), m.cols());
+        TS_ASSERT_EQUALS( m.rows(), 3);
+
         TS_ASSERT_THROWS( m[ -1 ], std::out_of_range);
         TS_ASSERT_THROWS( m[ 0 ][ -1 ], std::out_of_range);
         TS_ASSERT_THROWS( m[ 3 ][ 0 ], std::out_of_range);
@@ -148,10 +151,25 @@ public:
         TS_ASSERT_EQUALS(ss.str(), init_string);
     }
 
+    void testNegate() {
+        Matrix m = a_matrix_3by2();
+
+        Matrix neg_m = -m;
+
+        TS_ASSERT_EQUALS( neg_m[ 0 ][ 2 ], -m[ 0 ][ 2 ] );
+        TS_ASSERT_EQUALS( neg_m[ 0 ][ 1 ], -m[ 0 ][ 1 ] );
+        TS_ASSERT_EQUALS( neg_m[ 1 ][ 1 ], -m[ 1 ][ 1 ] );
+
+        Matrix neg_neg_m = -neg_m;
+
+        TS_ASSERT_EQUALS( m, neg_neg_m );
+    }
+
     void testAdd() {
         Matrix m = a_matrix_3by2();
         Matrix n;
-        stringstream(" [ 99 -34 0 ; 2 78 32 ] ") >> n;
+        std::stringstream ss(" [ 99 -34 0 ; 2 78 32 ] ");
+        ss >> n;
 
         Matrix o = m + n;
         Matrix p = n + m;
