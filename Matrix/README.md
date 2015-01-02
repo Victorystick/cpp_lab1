@@ -1,7 +1,7 @@
 Matrix flaws
 ============
 
-* [ ] 1:
+* [x] 1: { matrix1 } - { matrix2 } // First row and column are zeroes
 * [ ] 2:
 * [x] 3: stream >> { empty matrix } // Results in doubled values
 * [ ] 4:
