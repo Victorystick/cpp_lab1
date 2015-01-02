@@ -4,6 +4,9 @@
 #include <iostream>
 #include <stdexcept>
 
+#ifndef MP_Vector
+#define MP_Vector
+
 template <class T>
 class Vector : public std::vector< T > {
 public:
@@ -15,6 +18,8 @@ public:
         return this->at( i );
     }
 };
+
+#endif
 
 //using namespace std;
 
