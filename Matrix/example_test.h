@@ -88,6 +88,25 @@ public:
         TS_ASSERT_THROWS( m[2][0] = 1 , std::out_of_range);
         TS_ASSERT_THROWS( m[0][4] = 4, std::out_of_range);
         TS_ASSERT_THROWS( m[2][4] = 1 , std::out_of_range);
+    }
+
+    void testStreamInOperator() {
+        Matrix m(3,2);
+        std::stringstream s("  [ 99 -34 ; 0 2 ; 78 32]");
+        s >> m;
+
+        TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 99 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 1 ], -34 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 1 ], 2 );
+        TS_ASSERT_EQUALS( m[ 2 ][ 0 ], 78 );
+        TS_ASSERT_EQUALS( m[ 2 ][ 1 ], 32 );
+
+        std::stringstream s("  [ 99.1 -34 ; 0 2 ; 78 32]");
+        TS_ASSERT_THROWS( s >> m , domain_error);
+
+        std::stringstream s("  [ 99 -34 ; 0 hello ; 78 32]");
+        TS_ASSERT_THROWS( s >> m , domain_error);
 
     }
 };
