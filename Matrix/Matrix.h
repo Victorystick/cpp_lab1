@@ -40,6 +40,7 @@ class Matrix
     Matrix( );
     Matrix( std::size_t, std::size_t );
     Matrix( const Matrix& );
+    // Matrix( int );
     explicit Matrix( std::size_t ); // was: non-explicit, (int size)
     ~Matrix( );
 
@@ -51,6 +52,7 @@ class Matrix
     Matrix operator- ( ) const;
 
     Matrix& transpose( );
+    // Matrix transpose( ) const;
 
     matrix_row& operator[]( index i );
     const matrix_row& operator[]( index i ) const;

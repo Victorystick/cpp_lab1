@@ -49,12 +49,14 @@ Matrix::Matrix(std::size_t rows, std::size_t cols) :
 	}
 }
 
+Matrix::~Matrix() {}
+
 Matrix& Matrix::transpose() {
 	Matrix m (cols(), rows());
 
 	for (index i = 0; i < rows(); ++i) {
 		for (index j = 0; j < cols(); ++j) {
-			m[j][i] = m_vectors[j][i];
+			m[j][i] = m_vectors[i][j];
 		}
 	}
 
@@ -91,4 +93,63 @@ Matrix Matrix::operator+ ( const Matrix& other) const {
 		}
 	}
 	return res;
+}
+
+Matrix & Matrix::operator=(const Matrix & m) {
+	m_vectors = Vector<matrix_row>(m.rows());
+
+	for (index i = 0; i < rows(); ++i) {
+		matrix_row & r = m_vectors[i] = matrix_row(cols());
+		for (index j = 0; j < cols(); ++j) {
+			r[j] = m[i][j];
+		}
+	}
+
+	return *this;
+}
+
+Matrix Matrix::operator-() const {
+	Matrix m (rows(), cols());
+
+	for (index i = 0; i < rows(); ++i) {
+		for (index j = 0; j < cols(); ++j) {
+			m[j][i] = -m_vectors[j][i];
+		}
+	}
+
+	return m;
+}
+
+std::istream& operator>> ( std::istream& in, Matrix& m) {
+	m_cols = 0;
+	m_rows = 0;
+	m_vectors = Vector<matrix_row>();
+
+	char chr;
+
+	in >> chr; // No error handling. Always starts with '['
+
+	while (chr != ']') {
+
+	}
+
+	return in;
+}
+
+std::ostream& operator<< ( std::ostream& out, Matrix& m) {
+	out << "[ ";
+
+	for (Matrix::index i = 0; i < m.rows();) {
+		for (Matrix::index j = 0; j < m.cols(); ++j) {
+			out << m[i][j] << ' ';
+		}
+
+		if (++i != m.rows()) {
+			out << "\n;";
+		} else {
+			break;
+		}
+	}
+
+	return out << "]";
 }
