@@ -7,7 +7,7 @@ testcode    = example_test.h
 testcode.cpp: $(testcode)
 	python $(cxxtestpath)cxxtestgen.py --error-printer -o testcode.cpp $(testcode)
 
-testall: runtest01 runtest02 runtest03 runtest04 runtest05 \
+all: runtest01 runtest02 runtest04 runtest05 \
 	runtest06 runtest07 runtest08 runtest09
 
 runtest0%: testcode.cpp

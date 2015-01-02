@@ -1,9 +1,23 @@
+Matrix flaws
+============
+
+* [ ] 1:
+* [ ] 2:
+* [x] 3: stream into empty matrix doubles values
+* [ ] 4:
+* [ ] 5:
+* [ ] 6:
+* [ ] 7:
+* [ ] 8:
+* [ ] 9:
+
+
 #################################################################
 Read and edit makefile. Asign 'testcode' to your tests
 in Makefile:
     testcode    = example_test.h
 
-Generate your cxxtest with 
+Generate your cxxtest with
 
  make testcode.cpp
 
@@ -24,7 +38,7 @@ with (gcc --version)
 
  gcc (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3
 
-reached via 
+reached via
 
  ssh u-shell.csc.kth.se
 
