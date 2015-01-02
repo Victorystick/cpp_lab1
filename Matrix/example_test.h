@@ -105,13 +105,6 @@ public:
         TS_ASSERT_EQUALS( m[ 1 ][ 1 ], 2 );
         TS_ASSERT_EQUALS( m[ 2 ][ 0 ], 78 );
         TS_ASSERT_EQUALS( m[ 2 ][ 1 ], 32 );
-
-        std::stringstream s("  [ 99.1 -34 ; 0 2 ; 78 32]");
-        TS_ASSERT_THROWS( s >> m , domain_error);
-
-        std::stringstream s("  [ 99 -34 ; 0 hello ; 78 32]");
-        TS_ASSERT_THROWS( s >> m , domain_error);
-
     }
 
     void testStreamOperator() {
