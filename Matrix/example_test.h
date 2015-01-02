@@ -57,6 +57,14 @@ public:
         TS_ASSERT_THROWS( m[ 0 ][ 3 ], std::out_of_range);
     }
 
+    void testCopyConstructor() {
+        Matrix m (17);
+
+        Matrix n = m;
+
+        TS_ASSERT_EQUALS( n, m );
+    }
+
     void testZeroMatrix() {
         Matrix m (3, 3);
         // m *= 0;
