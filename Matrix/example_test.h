@@ -80,6 +80,14 @@ public:
         TS_ASSERT_EQUALS( m[ 1 ][ 2 ], INT_MIN );
         TS_ASSERT_EQUALS( m[ 1 ][ 3 ], -42 );
 
+        TS_ASSERT_THROWS( m[-1][0] = 1 , std::out_of_range);
+        TS_ASSERT_THROWS( m[0][-1] = 4, std::out_of_range);
+        TS_ASSERT_THROWS( m[-1][-1] = 1 , std::out_of_range);
+
+        TS_ASSERT_THROWS( m[2][0] = 1 , std::out_of_range);
+        TS_ASSERT_THROWS( m[0][4] = 4, std::out_of_range);
+        TS_ASSERT_THROWS( m[2][4] = 1 , std::out_of_range);
+
     }
 };
 
