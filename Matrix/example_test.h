@@ -37,6 +37,9 @@ public:
         TS_ASSERT_EQUALS( m[ 2 ][ 1 ], 0 );
         TS_ASSERT_EQUALS( m[ 2 ][ 2 ], 1 );
 
+        TS_ASSERT_EQUALS( m.rows(), m.cols());
+        TS_ASSERT_EQUALS( m.rows(), 3);
+
         TS_ASSERT_THROWS( m[ -1 ], std::out_of_range);
         TS_ASSERT_THROWS( m[ 0 ][ -1 ], std::out_of_range);
         TS_ASSERT_THROWS( m[ 3 ][ 0 ], std::out_of_range);
