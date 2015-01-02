@@ -6,7 +6,7 @@ Matrix flaws
 * [x] 3: stream >> { empty matrix } // Results in doubled values
 * [ ] 4:
 * [x] 5: stream << { matrix } // Adds extra rows and columns
-* [ ] 6:
+* [x] 6: { matrix }.transpose() // matrix[0][0] was set to 0
 * [ ] 7:
 * [ ] 8:
 * [ ] 9:
