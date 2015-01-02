@@ -254,6 +254,18 @@ public:
         TS_ASSERT_EQUALS( o[ 1 ][ 1 ], 80 );
         TS_ASSERT_EQUALS( o[ 1 ][ 2 ], 32 );
 
+        //Subtraction of 0-sized matrix
+        Matrix x(0,0);
+        TS_ASSERT_THROWS( x+m );
+        x = x-x;
+
+        //Subtraction of 1-sized matrix
+        x = Matrix(1, 1);
+        TS_ASSERT_THROWS(x+m);
+        x[0][0] = 1;
+        x = x - x;
+        TS_ASSERT_EQUALS(x, x(1, 1));
+
         Matrix i(2);
 
         i = i - i;
