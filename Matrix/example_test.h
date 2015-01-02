@@ -221,6 +221,19 @@ public:
         Matrix neg_neg_m = -neg_m;
 
         TS_ASSERT_EQUALS( m, neg_neg_m );
+
+        Matrix n = Matrix(2);
+        n[0][1] = INT_MIN;
+        n[1][0] = INT_MAX;
+
+        n = -n;
+
+        TS_ASSERT_EQUALS( n[ 0 ][ 1 ], INT_MAX );
+        TS_ASSERT_EQUALS( n[ 1 ][ 0 ], INT_MIN+1 );
+
+        n = -n;
+
+        TS_ASSERT_EQUALS( n[1][0], INT_MAX );
     }
 
     void testTranspose() {
