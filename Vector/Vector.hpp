@@ -55,9 +55,7 @@ class Vector {
 		const Vector<T> & operator=(Vector<T> &&);
 		T & operator[](const size_t);
 
-		T operator[](const size_t) const;
-
-		T & get(const size_t) const;
+		const T & operator[](const size_t) const;
 
 		void reset();
 

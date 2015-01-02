@@ -162,16 +162,39 @@ Matrix Matrix::operator-() const {
 }
 
 std::istream& operator>> ( std::istream& in, Matrix& m) {
-	m_cols = 0;
-	m_rows = 0;
-	m_vectors = Vector<matrix_row>();
+	m.m_cols = 1;
+	m.m_rows = 1;
+	m.m_vectors = Vector<Matrix::matrix_row>();
 
+	Matrix::matrix_row row;
 	char chr;
+	int num;
 
-	in >> chr; // No error handling. Always starts with '['
+	in >> std::ws >> chr >> std::ws; // No error handling. Always starts with '['
+
+	chr = in.peek();
+
+	// Determine when end of row.
+	while (chr != ';') {
+		in >> num;
+		row.push_back(num);
+		in >> std::ws;
+		chr = in.peek();
+		m.m_cols += 1;
+	}
+
+	m.m_vectors.push_back(row);
 
 	while (chr != ']') {
+		Matrix::matrix_row row;
+		for (Matrix::index i = 0; i < m.cols(); ++i) {
+			in >> num;
+			row.push_back(num);
+		}
+		m.m_vectors.push_back(row);
 
+		// eat ';' or ']'
+		in >> chr;
 	}
 
 	return in;
@@ -186,7 +209,7 @@ std::ostream& operator<< ( std::ostream& out, Matrix& m) {
 		}
 
 		if (++i != m.rows()) {
-			out << "\n;";
+			out << "\n; ";
 		} else {
 			break;
 		}
