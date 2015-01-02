@@ -92,6 +92,12 @@ public:
         m = i; // copy-assign
 
         TS_ASSERT_EQUALS( m, i );
+
+        i = Matrix(3); // copy-assign
+
+        m = i; // copy-assign
+
+        TS_ASSERT_EQUALS( m, i );
     }
 
     void testZeroMatrix() {
@@ -278,7 +284,7 @@ public:
 
         Matrix i (3);
         Matrix just_1, result;
-        std::stringstream ss2(" [ 1 0 0 ; 0 0 0 ; 0 0 0 ]  [ 2 0 0 ; 0 1 0 ; 0 0 1 ]");
+        std::stringstream ss2(" [ 1 0 0 ; 0 0 0 ; 0 0 0 ]  [ 2 0 0 ; 0 1 0 ; 0 0 1 ] [ 1 0 ; 0 0 ]");
         ss2 >> just_1 >> result;
 
         TS_ASSERT_EQUALS( i + just_1, result );
@@ -294,6 +300,23 @@ public:
         TS_ASSERT_EQUALS( result[ 2 ][ 0 ], 0 );
         TS_ASSERT_EQUALS( result[ 2 ][ 1 ], 0 );
         TS_ASSERT_EQUALS( result[ 2 ][ 2 ], 1 );
+
+        Matrix just_1_2;
+        ss2 >> just_1_2;
+        i = ones(2);
+        result = i + just_1_2;
+
+        TS_ASSERT_EQUALS( result[ 0 ][ 0 ], 2 );
+        TS_ASSERT_EQUALS( result[ 0 ][ 1 ], 1 );
+        TS_ASSERT_EQUALS( result[ 1 ][ 0 ], 1 );
+        TS_ASSERT_EQUALS( result[ 1 ][ 1 ], 1 );
+
+        result = just_1_2 + i;
+
+        TS_ASSERT_EQUALS( result[ 0 ][ 0 ], 2 );
+        TS_ASSERT_EQUALS( result[ 0 ][ 1 ], 1 );
+        TS_ASSERT_EQUALS( result[ 1 ][ 0 ], 1 );
+        TS_ASSERT_EQUALS( result[ 1 ][ 1 ], 1 );
     }
 
     void testSub() {
