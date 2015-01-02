@@ -264,7 +264,7 @@ public:
     void testMultiplication() {
         Matrix m = a_matrix_3by2();
         Matrix n;
-        std::stringstream ss(" [ 99 -1 ; -34 -1 ; 1 2 ] ");
+        std::stringstream ss(" [ 99 -1 ; -34 -1 ; 1 -2 ] ");
         ss >> n;
 
         Matrix o = m * n;
