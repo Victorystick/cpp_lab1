@@ -268,6 +268,13 @@ public:
         TS_ASSERT_EQUALS( o[ 1 ][ 1 ], 80 );
         TS_ASSERT_EQUALS( o[ 1 ][ 2 ], 32 );
 
+        TS_ASSERT_EQUALS( p[ 0 ][ 0 ], 100 );
+        TS_ASSERT_EQUALS( p[ 0 ][ 1 ], -31 );
+        TS_ASSERT_EQUALS( p[ 0 ][ 2 ], 5 );
+        TS_ASSERT_EQUALS( p[ 1 ][ 0 ], 2 );
+        TS_ASSERT_EQUALS( p[ 1 ][ 1 ], 80 );
+        TS_ASSERT_EQUALS( p[ 1 ][ 2 ], 32 );
+
         //Addition of 0-sized matrix
         Matrix x(0,0);
         TS_ASSERT_THROWS( x + m, std::out_of_range );
@@ -294,6 +301,17 @@ public:
         TS_ASSERT_EQUALS( z[ 2 ][ 0 ], 0 );
         TS_ASSERT_EQUALS( z[ 2 ][ 1 ], 0 );
         TS_ASSERT_EQUALS( z[ 2 ][ 2 ], 2 );
+
+        z = z + x;
+        TS_ASSERT_EQUALS( z[ 0 ][ 0 ], 3 );
+        TS_ASSERT_EQUALS( z[ 0 ][ 1 ], 0 );
+        TS_ASSERT_EQUALS( z[ 0 ][ 2 ], 0 );
+        TS_ASSERT_EQUALS( z[ 1 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( z[ 1 ][ 1 ], 3 );
+        TS_ASSERT_EQUALS( z[ 1 ][ 2 ], 0 );
+        TS_ASSERT_EQUALS( z[ 2 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( z[ 2 ][ 1 ], 0 );
+        TS_ASSERT_EQUALS( z[ 2 ][ 2 ], 3 );
 
         Matrix i (3);
         Matrix just_1, result;
@@ -386,6 +404,10 @@ public:
         TS_ASSERT_EQUALS( i[ 2 ][ 0 ], 1 );
         TS_ASSERT_EQUALS( i[ 2 ][ 1 ], 2 );
         TS_ASSERT_EQUALS( i[ 2 ][ 2 ], 1 );
+
+        ss2 << i;
+
+        TS_ASSERT_EQUALS(ss2.str(), std::string("[ 0 1 1 \n; 1 1 2 \n; 1 2 1 ]"));
     }
 
     void testScalarMult() {
@@ -450,7 +472,8 @@ public:
     void testMultiplication() {
         Matrix m = a_matrix_3by2();
         Matrix n;
-        std::stringstream ss(" [ 99 -1 ; -34 -1 ; 1 -2 ] ");
+        std::stringstream ss(" [ 99 -1 ; -34 -1 ; 1 -2 ] [ 1 1 1 ; 1 2 2 ; 1 2 2 ]");
+        std::stringstream sout;
         ss >> n;
 
         Matrix o = m * n;
@@ -460,10 +483,13 @@ public:
         TS_ASSERT_EQUALS( o[ 1 ][ 0 ], -68 );
         TS_ASSERT_EQUALS( o[ 1 ][ 1 ], -2 );
 
-        std::stringstream ss2(" [ 1 1 1 ; 1 2 2 ; 1 2 2 ]");
+        sout << o;
+
+        TS_ASSERT_EQUALS( sout.str(), std::string("[ 2 -14 \n; -68 -2 ]"));
+
         Matrix p;
 
-        ss2 >> p;
+        ss >> p;
 
         p = p * p;
 
@@ -476,6 +502,11 @@ public:
         TS_ASSERT_EQUALS( p[ 2 ][ 0 ], 5 );
         TS_ASSERT_EQUALS( p[ 2 ][ 1 ], 9 );
         TS_ASSERT_EQUALS( p[ 2 ][ 2 ], 9 );
+
+        sout.str(""); // reset
+        sout << p;
+
+        TS_ASSERT_EQUALS( sout.str(), std::string("[ 3 5 5 \n; 5 9 9 \n; 5 9 9 ]"));
 
         Matrix i = ones(2);
 
