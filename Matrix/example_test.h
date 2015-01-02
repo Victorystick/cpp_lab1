@@ -7,6 +7,17 @@
 #include <sstream>
 #include <climits>
 
+bool operator==(const Matrix & a, const Matrix & b) {
+    if (a.rows() != b.rows() || a.cols() != b.cols() ) return false;
+    for (int i = 0; i < a.cols(); ++i) {
+        for (int j = 0; j < a.rows(); ++j) {
+            if (a[i][j] != b[i][j]) return false;
+        }
+    }
+
+    return true;
+}
+
 class MatrixTestSuite : public CxxTest::TestSuite
 {
 
@@ -141,6 +152,23 @@ public:
         Matrix m = a_matrix_3by2();
         Matrix n;
         stringstream(" [ 99 -34 0 ; 2 78 32 ] ") >> n;
+
+        Matrix o = m + n;
+        Matrix p = n + m;
+        TS_ASSERT_EQUALS(o, p);
+
+        TS_ASSERT_EQUALS( o[ 0 ][ 0 ], 100 );
+        TS_ASSERT_EQUALS( o[ 0 ][ 1 ], -31 );
+        TS_ASSERT_EQUALS( o[ 0 ][ 2 ], 5 );
+        TS_ASSERT_EQUALS( o[ 2 ][ 1 ], 2 );
+        TS_ASSERT_EQUALS( o[ 2 ][ 0 ], 80 );
+        TS_ASSERT_EQUALS( o[ 2 ][ 2 ], 32 );
+    }
+
+    void testSub() {
+        Matrix m = a_matrix_3by2();
+        Matrix n;
+        stringstream(" [ -99 +34 0 ; -2 -78 -32 ] ") >> n;
 
         Matrix o = m + n;
         Matrix p = n + m;
