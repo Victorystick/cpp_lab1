@@ -7,7 +7,7 @@ Matrix flaws
 * [ ] 4:
 * [x] 5: stream << { matrix } // Adds extra rows and columns
 * [x] 6: { matrix }.transpose() // matrix[0][0] was set to 0
-* [ ] 7:
+* [x] 7: { matrix1 } + { matrix 2 } // If one of the elements being added is 0, the result is also 0.
 * [ ] 8:
 * [ ] 9:
 
