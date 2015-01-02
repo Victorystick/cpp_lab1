@@ -231,8 +231,6 @@ public:
         ss >> n;
 
         Matrix o = m * n;
-        Matrix p = n * m;
-        TS_ASSERT_EQUALS(o, p);
 
         TS_ASSERT_EQUALS( o[ 0 ][ 0 ], 2 );
         TS_ASSERT_EQUALS( o[ 0 ][ 1 ], -14 );
