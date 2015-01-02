@@ -3,7 +3,7 @@
 cxxtestpath = /info/cprog11/cxxtest/
 testcode    = example_test.h
 
-all: runtest02 runtest04 runtest06 runtest07 runtest08 runtest09
+all: runtest04 runtest06 runtest07 runtest08 runtest09
 
 testcode.cpp: $(testcode)
 	python $(cxxtestpath)cxxtestgen.py --error-printer -o testcode.cpp $(testcode)
