@@ -242,6 +242,23 @@ public:
         TS_ASSERT_EQUALS( m[ 1 ][ 0 ], 0 );
         TS_ASSERT_EQUALS( m[ 1 ][ 1 ], 3 );
     }
+
+    void testMultiplication() {
+        Matrix m = a_matrix_3by2();
+        Matrix n;
+        std::stringstream ss(" [ 99 -1 ; -34 -1 ; 1 2 ] ");
+        ss >> n;
+
+        Matrix o = m * n;
+        Matrix p = n * m;
+        TS_ASSERT_EQUALS(o, p);
+
+        TS_ASSERT_EQUALS( o[ 0 ][ 0 ], 2 );
+        TS_ASSERT_EQUALS( o[ 0 ][ 1 ], -14 );
+        TS_ASSERT_EQUALS( o[ 0 ][ 2 ], -68 );
+        TS_ASSERT_EQUALS( o[ 2 ][ 1 ], -2 );
+    }
+
 };
 
 #endif
