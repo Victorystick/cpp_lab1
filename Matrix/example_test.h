@@ -83,6 +83,7 @@ public:
         n = m;
 
         TS_ASSERT_EQUALS( n, m );
+        TS_ASSERT_EQUALS( n[0][0], m[0][0] );
     }
 
     void testCopyAssignment() {
@@ -127,6 +128,10 @@ public:
         TS_ASSERT_EQUALS( m[ 1 ][ 1 ], 2 );
         TS_ASSERT_EQUALS( m[ 1 ][ 2 ], 0 );
 
+        TS_ASSERT_THROWS( m[ 2 ][ 0 ], std::out_of_range);
+        TS_ASSERT_THROWS( m[ 0 ][ 3 ], std::out_of_range);
+        TS_ASSERT_THROWS( m[ 2 ][ 3 ], std::out_of_range);
+
         init_matrix(m, "  [ 1 3 5 ; 0 2 1 ]");
         TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 1 );
         TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 1 );
@@ -136,6 +141,17 @@ public:
         TS_ASSERT_EQUALS( m[ 1 ][ 1 ], 2 );
         TS_ASSERT_EQUALS( m[ 1 ][ 2 ], 1 );
 
+        TS_ASSERT_THROWS( m[ 2 ][ 0 ], std::out_of_range);
+        TS_ASSERT_THROWS( m[ 0 ][ 3 ], std::out_of_range);
+        TS_ASSERT_THROWS( m[ 2 ][ 3 ], std::out_of_range);
+
+        TS_ASSERT_THROWS( m[-1][0] , std::out_of_range);
+        TS_ASSERT_THROWS( m[ 13 ][ 37 ] , std::out_of_range);
+    }
+
+    void testStreamInAndOut() {
+        Matrix m;
+        init_matrix(m, " [ 1 3 5 ; 0 2 1 ]");
         std::stringstream ss;
         ss << m;
         ss >> m;
@@ -186,8 +202,7 @@ public:
 
     void testStreamInOperator() {
         Matrix m(3,2);
-        std::stringstream s("  [ 99 -34 ; 0 2 ; 78 32]");
-        s >> m;
+        init_matrix(m, "  [ 99 -34 ; 0 2 ; 78 32]");
 
         TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 99 );
         TS_ASSERT_EQUALS( m[ 0 ][ 1 ], -34 );
@@ -254,8 +269,7 @@ public:
     void testAdd() {
         Matrix m = a_matrix_3by2();
         Matrix n;
-        std::stringstream ss(" [ 99 -34 0 ; 2 78 32 ] ");
-        ss >> n;
+        init_matrix(n, " [ 99 -34 0 ; 2 78 32 ] ");
 
         Matrix o = m + n;
         Matrix p = n + m;
@@ -351,10 +365,9 @@ public:
     }
 
     void testSub() {
-        Matrix m = a_matrix_3by2(); // "  [ 1 3 5 ; 0 2 0 ]"
+        Matrix m = a_matrix_3by2();
         Matrix n;
-        std::stringstream ss(" [ -99 34 0 ; -2 -78 -32 ] ");
-        ss >> n;
+        init_matrix(n, " [ -99 34 0 ; -2 -78 -32 ] ");
 
         Matrix o = n - n;
 
@@ -513,6 +526,128 @@ public:
         i = i * i;
 
         TS_ASSERT_EQUALS( i[ 1 ][ 0 ], 2);
+    }
+
+    void testMatrix01() {
+    #ifdef TEST01
+        Matrix m = ones(2), i (2);
+
+        m = (i * 2) - m;
+
+        TS_ASSERT_EQUALS( m[ 0 ][ 0 ],  1 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 1 ], -1 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 0 ], -1 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 1 ],  1 );
+    #endif
+    }
+
+    void testMatrix02() {
+    #ifdef TEST02
+        Matrix m = ones(2), i (2);
+
+        m = m * i;
+
+        TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 1 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 1 ], 1 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 0 ], 1 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 1 ], 1 );
+    #endif
+    }
+
+    void testMatrix03() {
+    #ifdef TEST03
+        Matrix m (2), n;
+
+        n = m;
+
+        TS_ASSERT_EQUALS( n[ 0 ][ 0 ], 1 );
+        TS_ASSERT_EQUALS( n[ 0 ][ 1 ], 0 );
+        TS_ASSERT_EQUALS( n[ 1 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( n[ 1 ][ 1 ], 1 );
+    #endif
+    }
+
+    /// 4 ....
+
+    void testMatrix05() {
+    #ifdef TEST05
+        std::stringstream ss;
+        Matrix m;
+
+        init_matrix(m, "[ 1 ]");
+
+        ss << m;
+
+        TS_ASSERT_EQUALS( m.cols(), (std::size_t)1 );
+        TS_ASSERT_EQUALS( m.rows(), (std::size_t)1 );
+        TS_ASSERT_EQUALS( ss.str(), "[ 1 ]" );
+
+        TS_ASSERT_THROWS_NOTHING(
+            init_matrix(m, "[ 1 1 1 1 ; 1 1 1 1 ; 1 1 1 1 ; 1 1 1 1 ]") );
+
+        TS_ASSERT_EQUALS( m.cols(), (std::size_t)4 );
+        TS_ASSERT_EQUALS( m.rows(), (std::size_t)4 );
+    #endif
+    }
+
+    void testMatrix06() {
+    #ifdef TEST06
+        Matrix m = ones(1);
+
+        m.transpose();
+
+        TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 1 );
+    #endif
+    }
+
+    void testMatrix07() {
+    #ifdef TEST07
+        Matrix m = ones(2), i (2);
+
+        TS_ASSERT_EQUALS( m + i, i );
+        TS_ASSERT_EQUALS( i + m, i );
+    #endif
+    }
+
+    void testMatrix08() {
+    #ifdef TEST08
+        Matrix m = ones(2), i (2);
+
+        TS_ASSERT_EQUALS( i + m, i );
+    #endif
+    }
+
+    void testMatrix09() {
+    #ifdef TEST09
+        // Inverted TEST01
+        Matrix m = ones(2), i (2);
+
+        m = (i * 2) - m;
+
+        TS_ASSERT_EQUALS( m[ 0 ][ 0 ],  1 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 1 ], -1 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 0 ], -1 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 1 ],  1 );
+
+        m = ones(2);
+
+        m = m * i;
+
+        TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 1 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 1 ], 1 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 0 ], 1 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 1 ], 1 );
+
+        m = ones(2) * 3;
+        i = i * 17;
+
+        m = m + i;
+
+        TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 20 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 1 ], 3 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 0 ], 3 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 1 ], 20 );
+    #endif
     }
 
 };
