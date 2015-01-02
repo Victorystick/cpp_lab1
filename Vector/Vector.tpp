@@ -6,7 +6,7 @@
 
 template <typename T>
 void Vector<T>::init(size_t s) {
-	s = s < 16 ? 16 : s;
+	s = s < 2 ? 2 : s;
 
 	vec = new T[s];
 	cap = s;
@@ -35,7 +35,7 @@ void Vector<T>::copy(const Vector<T> & other) {
 
 	if (vec == nullptr || length > cap) {
 		if (vec != nullptr) {
-			delete vec;
+			delete[] vec;
 		}
 
 		init(length);
@@ -71,7 +71,7 @@ template <typename T>
 Vector<T>::Vector() : length(0) {
 	is_ok();
 
-	init(16);
+	init(2);
 }
 
 template <typename T>

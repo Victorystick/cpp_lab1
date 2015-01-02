@@ -105,6 +105,8 @@ class Vector {
 		}
 };
 
-#include "Vector.tpp" // Hack for templates
+// Apparently, this is the reccomendation.
+#include "Vector.tpp"
+// #include "Vector_bool.tpp"
 
 #endif
