@@ -224,6 +224,35 @@ public:
         TS_ASSERT_EQUALS( o[ 1 ][ 0 ], 2 );
         TS_ASSERT_EQUALS( o[ 1 ][ 1 ], 80 );
         TS_ASSERT_EQUALS( o[ 1 ][ 2 ], 32 );
+
+        //Addition of 0-sized matrix
+        Matrix x(0,0);
+        TS_ASSERT_THROWS( x+m );
+        x = x+x;
+
+        //Addition of 1-sized matrix
+        x = Matrix(1, 1);
+        TS_ASSERT_THROWS(x+m);
+        x[0][0] = 1;
+        x = x + x;
+        TS_ASSERT_EQUALS(x[0][0], 2);
+
+
+        //Addition of square matricies
+        x = Matrix(3);
+        y = x;
+        y.transpose();
+
+        Matrix z = x+y;
+        TS_ASSERT_EQUALS( o[ 0 ][ 0 ], 2 );
+        TS_ASSERT_EQUALS( o[ 0 ][ 1 ], 0 );
+        TS_ASSERT_EQUALS( o[ 0 ][ 2 ], 0 );
+        TS_ASSERT_EQUALS( o[ 1 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( o[ 1 ][ 1 ], 2 );
+        TS_ASSERT_EQUALS( o[ 1 ][ 2 ], 0 );
+        TS_ASSERT_EQUALS( o[ 2 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( o[ 2 ][ 1 ], 0 );
+        TS_ASSERT_EQUALS( o[ 2 ][ 2 ], 2 );
     }
 
     void testSub() {
@@ -244,6 +273,18 @@ public:
         TS_ASSERT_EQUALS( o[ 1 ][ 0 ], 2 );
         TS_ASSERT_EQUALS( o[ 1 ][ 1 ], 80 );
         TS_ASSERT_EQUALS( o[ 1 ][ 2 ], 32 );
+
+        //Subtraction of 0-sized matrix
+        Matrix x(0,0);
+        TS_ASSERT_THROWS( x+m );
+        x = x-x;
+
+        //Subtraction of 1-sized matrix
+        x = Matrix(1, 1);
+        TS_ASSERT_THROWS(x+m);
+        x[0][0] = 1;
+        x = x - x;
+        TS_ASSERT_EQUALS(x, x(1, 1));
 
         Matrix i(2);
 
@@ -274,11 +315,46 @@ public:
         Matrix m (2);
 
         m = m * 3;
-
         TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 3 );
         TS_ASSERT_EQUALS( m[ 0 ][ 1 ], 0 );
         TS_ASSERT_EQUALS( m[ 1 ][ 0 ], 0 );
         TS_ASSERT_EQUALS( m[ 1 ][ 1 ], 3 );
+
+        m = m * 0;
+        TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 1 ], 0 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 1 ], 0 );
+
+        m Matrix(1,3);
+        m[0, 0] = 1;
+        m[0, 1] = 2;
+        m[0, 2] = 7;
+
+        m = m*9;
+        TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 9 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 1 ], 18 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 2 ], 63 );
+
+        m = Matrix(3,1);
+        m[0, 0] = 1;
+        m[1, 0] = 2;
+        m[2, 0] = 7;
+
+        m = m*9;
+        TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 9 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 0 ], 18 );
+        TS_ASSERT_EQUALS( m[ 2 ][ 0 ], 63 );
+
+        m = Matrix(0)
+        m = m*1;
+        TS_ASSERT_THROWS(m[0][0]);
+
+        m = Matrix(1)
+        m = m*1;
+        TS_ASSERT_EQUALS(m[0][0], 1);
+        TS_ASSERT_THROWS(m[0][1]);
+        TS_ASSERT_THROWS(m[1][0]);
     }
 
     void testScalarMultAndSub() {
