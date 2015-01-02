@@ -63,7 +63,7 @@ public:
         TS_ASSERT_EQUALS( m[ 2 ][ 2 ], 1 );
 
         TS_ASSERT_EQUALS( m.rows(), m.cols());
-        TS_ASSERT_EQUALS( m.rows(), 3);
+        TS_ASSERT_EQUALS( m.rows(), (std::size_t)3);
 
         TS_ASSERT_THROWS( m[ -1 ], std::out_of_range);
         TS_ASSERT_THROWS( m[ 0 ][ -1 ], std::out_of_range);
@@ -223,13 +223,13 @@ public:
         TS_ASSERT_EQUALS( m, neg_neg_m );
 
         Matrix n = Matrix(2);
-        n[0][1] = INT_MIN;
+        n[0][1] = INT_MIN + 1;
         n[1][0] = INT_MAX;
 
         n = -n;
 
         TS_ASSERT_EQUALS( n[ 0 ][ 1 ], INT_MAX );
-        TS_ASSERT_EQUALS( n[ 1 ][ 0 ], INT_MIN+1 );
+        TS_ASSERT_EQUALS( n[ 1 ][ 0 ], INT_MIN + 1 );
 
         n = -n;
 
