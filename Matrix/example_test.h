@@ -223,6 +223,17 @@ public:
 
         TS_ASSERT_EQUALS( i, Matrix(2, 2) );
     }
+
+    void testScalarMult() {
+        Matrix m (2);
+
+        m = m * 3;
+
+        TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 3 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 1 ], 0 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 1 ], 3 );
+    }
 };
 
 #endif
