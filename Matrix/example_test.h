@@ -277,11 +277,46 @@ public:
         Matrix m (2);
 
         m = m * 3;
-
         TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 3 );
         TS_ASSERT_EQUALS( m[ 0 ][ 1 ], 0 );
         TS_ASSERT_EQUALS( m[ 1 ][ 0 ], 0 );
         TS_ASSERT_EQUALS( m[ 1 ][ 1 ], 3 );
+
+        m = m * 0;
+        TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 1 ], 0 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 1 ], 0 );
+
+        m Matrix(1,3);
+        m[0, 0] = 1;
+        m[0, 1] = 2;
+        m[0, 2] = 7;
+
+        m = m*9;
+        TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 9 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 1 ], 18 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 2 ], 63 );
+
+        m = Matrix(3,1);
+        m[0, 0] = 1;
+        m[1, 0] = 2;
+        m[2, 0] = 7;
+
+        m = m*9;
+        TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 9 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 0 ], 18 );
+        TS_ASSERT_EQUALS( m[ 2 ][ 0 ], 63 );
+
+        m = Matrix(0)
+        m = m*1;
+        TS_ASSERT_THROWS(m[0][0]);
+
+        m = Matrix(1)
+        m = m*1;
+        TS_ASSERT_EQUALS(m[0][0], 1);
+        TS_ASSERT_THROWS(m[0][1]);
+        TS_ASSERT_THROWS(m[1][0]);
     }
 
     void testMultiplication() {
