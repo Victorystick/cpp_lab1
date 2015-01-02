@@ -1,4 +1,3 @@
-#include "../Vector/Vector.hpp"
 #include "Matrix.h"
 
 Matrix::Matrix() :
@@ -8,18 +7,14 @@ Matrix::Matrix() :
 }
 
 Matrix::Matrix(std::size_t size) :
-	m_vectors(size),
+	m_vectors(size, matrix_row(size)),
 	m_rows(size),
 	m_cols(size)
 {
 	index i = 0;
 
 	for (matrix_row & v : m_vectors) {
-		v = matrix_row(size);
-
-		v[i] = 1;
-
-		++i;
+		v[i++] = 1;
 	}
 }
 
@@ -40,13 +35,10 @@ Matrix::Matrix(const Matrix & m) :
 }
 
 Matrix::Matrix(std::size_t rows, std::size_t cols) :
-	m_vectors(rows),
+	m_vectors(rows, matrix_row(cols)),
 	m_rows(rows),
 	m_cols(cols)
 {
-	for (matrix_row & v : m_vectors) {
-		v = matrix_row(cols);
-	}
 }
 
 Matrix::~Matrix() {}
@@ -66,10 +58,19 @@ Matrix& Matrix::transpose() {
 }
 
 Matrix::matrix_row& Matrix::operator[](index i) {
+	if (i >= rows()) {
+		throw std::out_of_range("index out of bounds");
+	}
 	return m_vectors[i];
 }
 
 const Matrix::matrix_row& Matrix::operator[](index i) const {
+	if (i >= rows()) {
+		throw std::out_of_range("index out of bounds");
+	}
+
+	std::cout << "Accessed " << (size_t)this << std::endl;
+
 	return m_vectors[i];
 }
 
@@ -163,7 +164,7 @@ Matrix Matrix::operator-() const {
 
 std::istream& operator>> ( std::istream& in, Matrix& m) {
 	// Clear internal vectors.
-	m.m_vectors = Vector<Matrix::matrix_row>();
+	m.m_vectors = std::move(Vector<Matrix::matrix_row>());
 
 	Matrix::matrix_row row;
 	char chr;
@@ -174,7 +175,7 @@ std::istream& operator>> ( std::istream& in, Matrix& m) {
 	chr = in.peek();
 
 	// Determine when end of row.
-	while (chr != ';') {
+	while (chr != ';' && chr != ']') {
 		in >> num;
 		row.push_back(num);
 		in >> std::ws;
@@ -185,8 +186,12 @@ std::istream& operator>> ( std::istream& in, Matrix& m) {
 
 	m.m_vectors.push_back(row);
 
+	// eat ';' or ']'
+	in >> std::ws >> chr >> std::ws;
+
 	while (chr != ']') {
 		Matrix::matrix_row row;
+
 		for (Matrix::index i = 0; i < m.cols(); ++i) {
 			in >> num;
 			row.push_back(num);
@@ -194,7 +199,7 @@ std::istream& operator>> ( std::istream& in, Matrix& m) {
 		m.m_vectors.push_back(row);
 
 		// eat ';' or ']'
-		in >> chr;
+		in >> std::ws >> chr >> std::ws;
 	}
 
 	m.m_rows = m.m_vectors.size();
