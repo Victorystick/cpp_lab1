@@ -14,16 +14,12 @@ class Vector {
 		size_t cap;
 		T* vec;
 
-		void init(const size_t);
+		void init(size_t);
 		void copy(const Vector &);
 		void more_memory();
 		void copy_data(const size_t, const T*, const size_t = 0, const int = 0);
 		void is_ok();
 		void set_all(const T &);
-
-		/*class RandomAccessVectorIterator : public std::iterator<std::random_access_iterator_tag, T> {
-
-		};*/
 
 		friend class VectorTestSuite;
 	public:
@@ -48,8 +44,6 @@ class Vector {
 		// Destructor
 		~Vector();
 
-		typedef T* iterator;
-
 		// Assignment
 		const Vector<T> & operator=(const Vector<T> & temp);
 		const Vector<T> & operator=(Vector<T> &&);
@@ -71,11 +65,22 @@ class Vector {
 
 		size_t capacity() const;
 
+		/// Iterators
+
+		typedef T* iterator;
+		typedef const T* const_iterator;
+
 		iterator begin();
 
 		iterator end();
 
 		iterator find(T const&);
+
+		const_iterator begin() const;
+
+		const_iterator end() const;
+
+		const_iterator find(T const&) const;
 
 		void print();
 
@@ -98,21 +103,6 @@ class Vector {
 			init(N);
 			std::copy(v, v+N, vec);
 		}
-
-		/*class iterator :
-		public std::iterator<std::random_access_iterator_tag, T> {
-			T* vec;
-		public:
-			iterator(T* vec);
-			iterator(const Vector<T>::iterator & it);
-			Vector<T>::iterator & operator++();
-			Vector<T>::iterator& operator--();
-			iterator operator++(int);
-			bool operator==(const iterator & other) const;
-			bool operator!=(const iterator & other) const;
-			T& operator*();
-			const T& operator*() const;
-		};*/
 };
 
 #include "Vector.tpp" // Hack for templates

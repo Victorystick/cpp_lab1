@@ -159,7 +159,7 @@ public:
 		Vector<int> v({1,2,3,4,5});
 		TS_ASSERT_EQUALS(v.size(), 5);
 
-		v.erase(5);
+		TS_ASSERT_THROWS( v.erase(5), std::out_of_range );
 		TS_ASSERT_EQUALS(v.size(), 5);
 		TS_ASSERT_EQUALS(v[0], 1);
 		TS_ASSERT_EQUALS(v[1], 2);

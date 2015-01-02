@@ -5,7 +5,9 @@
 #include <iterator>
 
 template <typename T>
-void Vector<T>::init(const size_t s) {
+void Vector<T>::init(size_t s) {
+	s = s < 16 ? 16 : s;
+
 	vec = new T[s];
 	cap = s;
 }
@@ -93,7 +95,7 @@ Vector<T>::Vector(std::initializer_list<T> l) {
 	is_ok();
 
 	init(l.size());
-	length = cap;
+	length = l.size();
 	std::copy(l.begin(), l.end(), vec);
 }
 
@@ -244,7 +246,7 @@ void Vector<T>::insert(const size_t index, const T val) {
 template <typename T>
 void Vector<T>::erase(const size_t index) {
 	if (index >= length) {
-		return;
+		throw std::out_of_range ("Vector index is out of bounds.");
 	}
 
 	--length;
@@ -274,3 +276,25 @@ typename Vector<T>::iterator Vector<T>::find(const T & val) {
 
 	return end();
 }
+
+template <typename T>
+typename Vector<T>::const_iterator Vector<T>::begin() const {
+	return vec;
+}
+
+template <typename T>
+typename Vector<T>::const_iterator Vector<T>::end() const {
+	return &vec[length];
+}
+
+template <typename T>
+typename Vector<T>::const_iterator Vector<T>::find(const T & val) const{
+	for (auto it = begin(); it != end(); ++it) {
+		if (*it == val) {
+			return it;
+		}
+	}
+
+	return end();
+}
+
