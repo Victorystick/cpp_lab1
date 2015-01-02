@@ -78,3 +78,17 @@ std::size_t Matrix::rows() const {
 std::size_t Matrix::cols() const {
 	return m_cols;
 }
+
+Matrix Matrix::operator+ ( const Matrix& other) const {
+	if (other.cols() != cols() || other.rows() != rows()) {
+		throw std::out_of_range("Incompatible sizes");
+	}
+
+	Matrix res (cols(), rows());
+	for (index i = 0; i < rows(); ++i) {
+		for (index j = 0; j < cols(); ++j) {
+			res[j][i] = m_vectors[j][i] + other[j][i];
+		}
+	}
+	return res;
+}
