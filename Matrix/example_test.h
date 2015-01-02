@@ -9,8 +9,8 @@
 
 bool operator==(const Matrix & a, const Matrix & b) {
     if (a.rows() != b.rows() || a.cols() != b.cols() ) return false;
-    for (int i = 0; i < a.cols(); ++i) {
-        for (int j = 0; j < a.rows(); ++j) {
+    for (unsigned int i = 0; i < a.cols(); ++i) {
+        for (unsigned int j = 0; j < a.rows(); ++j) {
             if (a[j][i] != b[j][i]) return false;
         }
     }
@@ -37,9 +37,9 @@ class MatrixTestSuite : public CxxTest::TestSuite
     Matrix ones(std::size_t size) {
         Matrix m (size, size);
 
-        for (int i = 0; i < size; ++i)
+        for (unsigned int i = 0; i < size; ++i)
         {
-            for (int j = 0; j < size; ++j)
+            for (unsigned int j = 0; j < size; ++j)
             {
                 m[i][j] = 1;
             }
@@ -208,6 +208,18 @@ public:
         TS_ASSERT_EQUALS( m, neg_neg_m );
     }
 
+    void testTranspose() {
+        Matrix n (2), m = n;
+        m.transpose();
+
+        TS_ASSERT_EQUALS( n, m );
+
+        TS_ASSERT_EQUALS( n[ 0 ][ 0 ], m[ 0 ][ 0 ] );
+        TS_ASSERT_EQUALS( n[ 0 ][ 1 ], m[ 0 ][ 1 ] );
+        TS_ASSERT_EQUALS( n[ 1 ][ 0 ], m[ 1 ][ 0 ] );
+        TS_ASSERT_EQUALS( n[ 1 ][ 1 ], m[ 1 ][ 1 ] );
+    }
+
     void testAdd() {
         Matrix m = a_matrix_3by2();
         Matrix n;
@@ -227,12 +239,12 @@ public:
 
         //Addition of 0-sized matrix
         Matrix x(0,0);
-        TS_ASSERT_THROWS( x+m );
-        x = x+x;
+        TS_ASSERT_THROWS( x + m, std::out_of_range );
+        x = x + x;
 
         //Addition of 1-sized matrix
         x = Matrix(1, 1);
-        TS_ASSERT_THROWS(x+m);
+        TS_ASSERT_THROWS( x + m, std::out_of_range);
         x[0][0] = 1;
         x = x + x;
         TS_ASSERT_EQUALS(x[0][0], 2);
@@ -240,19 +252,28 @@ public:
 
         //Addition of square matricies
         x = Matrix(3);
-        y = x;
-        y.transpose();
 
-        Matrix z = x+y;
-        TS_ASSERT_EQUALS( o[ 0 ][ 0 ], 2 );
-        TS_ASSERT_EQUALS( o[ 0 ][ 1 ], 0 );
-        TS_ASSERT_EQUALS( o[ 0 ][ 2 ], 0 );
-        TS_ASSERT_EQUALS( o[ 1 ][ 0 ], 0 );
-        TS_ASSERT_EQUALS( o[ 1 ][ 1 ], 2 );
-        TS_ASSERT_EQUALS( o[ 1 ][ 2 ], 0 );
-        TS_ASSERT_EQUALS( o[ 2 ][ 0 ], 0 );
-        TS_ASSERT_EQUALS( o[ 2 ][ 1 ], 0 );
-        TS_ASSERT_EQUALS( o[ 2 ][ 2 ], 2 );
+        Matrix z = x + x;
+        TS_ASSERT_EQUALS( z[ 0 ][ 0 ], 2 );
+        TS_ASSERT_EQUALS( z[ 0 ][ 1 ], 0 );
+        TS_ASSERT_EQUALS( z[ 0 ][ 2 ], 0 );
+        TS_ASSERT_EQUALS( z[ 1 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( z[ 1 ][ 1 ], 2 );
+        TS_ASSERT_EQUALS( z[ 1 ][ 2 ], 0 );
+        TS_ASSERT_EQUALS( z[ 2 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( z[ 2 ][ 1 ], 0 );
+        TS_ASSERT_EQUALS( z[ 2 ][ 2 ], 2 );
+
+        Matrix i (3);
+        Matrix just_1, result;
+        std::stringstream ss2(" [ 1 0 0 ; 0 0 0 ; 0 0 0 ]  [ 2 0 0 ; 0 1 0 ; 0 0 1 ]");
+        ss2 >> just_1 >> result;
+
+        TS_ASSERT_EQUALS( i + just_1, result );
+
+        TS_ASSERT_EQUALS( (i + just_1)[ 0 ][ 0 ], 2 );
+        TS_ASSERT_EQUALS( (i + i)[ 0 ][ 0 ], 2 );
+
     }
 
     void testSub() {
@@ -276,15 +297,15 @@ public:
 
         //Subtraction of 0-sized matrix
         Matrix x(0,0);
-        TS_ASSERT_THROWS( x+m );
-        x = x-x;
+        TS_ASSERT_THROWS( x - m, std::out_of_range );
+        x = x - x;
 
         //Subtraction of 1-sized matrix
         x = Matrix(1, 1);
-        TS_ASSERT_THROWS(x+m);
+        TS_ASSERT_THROWS( x - m, std::out_of_range );
         x[0][0] = 1;
         x = x - x;
-        TS_ASSERT_EQUALS(x, x(1, 1));
+        TS_ASSERT_EQUALS(x, Matrix(1, 1));
 
         Matrix i(2);
 
@@ -326,10 +347,10 @@ public:
         TS_ASSERT_EQUALS( m[ 1 ][ 0 ], 0 );
         TS_ASSERT_EQUALS( m[ 1 ][ 1 ], 0 );
 
-        m Matrix(1,3);
-        m[0, 0] = 1;
-        m[0, 1] = 2;
-        m[0, 2] = 7;
+        m = Matrix(1, 3);
+        m[0][0] = 1;
+        m[0][1] = 2;
+        m[0][2] = 7;
 
         m = m*9;
         TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 9 );
@@ -337,24 +358,24 @@ public:
         TS_ASSERT_EQUALS( m[ 0 ][ 2 ], 63 );
 
         m = Matrix(3,1);
-        m[0, 0] = 1;
-        m[1, 0] = 2;
-        m[2, 0] = 7;
+        m[0][0] = 1;
+        m[1][0] = 2;
+        m[2][0] = 7;
 
         m = m*9;
         TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 9 );
         TS_ASSERT_EQUALS( m[ 1 ][ 0 ], 18 );
         TS_ASSERT_EQUALS( m[ 2 ][ 0 ], 63 );
 
-        m = Matrix(0)
+        m = Matrix(0);
         m = m*1;
-        TS_ASSERT_THROWS(m[0][0]);
+        TS_ASSERT_THROWS(m[0][0], std::out_of_range);
 
-        m = Matrix(1)
+        m = Matrix(1);
         m = m*1;
         TS_ASSERT_EQUALS(m[0][0], 1);
-        TS_ASSERT_THROWS(m[0][1]);
-        TS_ASSERT_THROWS(m[1][0]);
+        TS_ASSERT_THROWS(m[0][1], std::out_of_range);
+        TS_ASSERT_THROWS(m[1][0], std::out_of_range);
     }
 
     void testScalarMultAndSub() {
