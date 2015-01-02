@@ -11,7 +11,7 @@ bool operator==(const Matrix & a, const Matrix & b) {
     if (a.rows() != b.rows() || a.cols() != b.cols() ) return false;
     for (int i = 0; i < a.cols(); ++i) {
         for (int j = 0; j < a.rows(); ++j) {
-            if (a[i][j] != b[i][j]) return false;
+            if (a[j][i] != b[j][i]) return false;
         }
     }
 
@@ -55,6 +55,21 @@ public:
         TS_ASSERT_THROWS( m[ 0 ][ -1 ], std::out_of_range);
         TS_ASSERT_THROWS( m[ 3 ][ 0 ], std::out_of_range);
         TS_ASSERT_THROWS( m[ 0 ][ 3 ], std::out_of_range);
+    }
+
+    void testZeroMatrix() {
+        Matrix m (3, 3);
+        // m *= 0;
+
+        TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 1 ], 0 );
+        TS_ASSERT_EQUALS( m[ 0 ][ 2 ], 0 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 1 ], 0 );
+        TS_ASSERT_EQUALS( m[ 1 ][ 2 ], 0 );
+        TS_ASSERT_EQUALS( m[ 2 ][ 0 ], 0 );
+        TS_ASSERT_EQUALS( m[ 2 ][ 1 ], 0 );
+        TS_ASSERT_EQUALS( m[ 2 ][ 2 ], 0 );
     }
 
     void testIndexOperator() {
@@ -178,26 +193,35 @@ public:
         TS_ASSERT_EQUALS( o[ 0 ][ 0 ], 100 );
         TS_ASSERT_EQUALS( o[ 0 ][ 1 ], -31 );
         TS_ASSERT_EQUALS( o[ 0 ][ 2 ], 5 );
-        TS_ASSERT_EQUALS( o[ 2 ][ 1 ], 2 );
-        TS_ASSERT_EQUALS( o[ 2 ][ 0 ], 80 );
-        TS_ASSERT_EQUALS( o[ 2 ][ 2 ], 32 );
+        TS_ASSERT_EQUALS( o[ 1 ][ 0 ], 2 );
+        TS_ASSERT_EQUALS( o[ 1 ][ 1 ], 80 );
+        TS_ASSERT_EQUALS( o[ 1 ][ 2 ], 32 );
     }
 
     void testSub() {
-        Matrix m = a_matrix_3by2();
+        Matrix m = a_matrix_3by2(); // "  [ 1 3 5 ; 0 2 0 ]"
         Matrix n;
-        stringstream(" [ -99 +34 0 ; -2 -78 -32 ] ") >> n;
+        std::stringstream ss(" [ -99 34 0 ; -2 -78 -32 ] ");
+        ss >> n;
 
-        Matrix o = m + n;
-        Matrix p = n + m;
-        TS_ASSERT_EQUALS(o, p);
+        Matrix o = n - n;
+
+        TS_ASSERT_EQUALS( o, Matrix(2, 3) );
+
+        o = m - n;
 
         TS_ASSERT_EQUALS( o[ 0 ][ 0 ], 100 );
         TS_ASSERT_EQUALS( o[ 0 ][ 1 ], -31 );
         TS_ASSERT_EQUALS( o[ 0 ][ 2 ], 5 );
-        TS_ASSERT_EQUALS( o[ 2 ][ 1 ], 2 );
-        TS_ASSERT_EQUALS( o[ 2 ][ 0 ], 80 );
-        TS_ASSERT_EQUALS( o[ 2 ][ 2 ], 32 );
+        TS_ASSERT_EQUALS( o[ 1 ][ 0 ], 2 );
+        TS_ASSERT_EQUALS( o[ 1 ][ 1 ], 80 );
+        TS_ASSERT_EQUALS( o[ 1 ][ 2 ], 32 );
+
+        Matrix i(2);
+
+        i = i - i;
+
+        TS_ASSERT_EQUALS( i, Matrix(2, 2) );
     }
 };
 
