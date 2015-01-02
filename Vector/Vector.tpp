@@ -46,7 +46,7 @@ void Vector<T>::copy_data(const size_t end, const T* other,
 			vec[i + shift] = other[i];
 		}
 	} else {
-		for (int i = start; i < end; ++i) {
+		for (size_t i = start; i < end; ++i) {
 			vec[i + shift] = other[i];
 		}
 	}
