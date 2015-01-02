@@ -56,6 +56,10 @@ public:
         TS_ASSERT_EQUALS( m[ 1 ][ 1 ], 2 );
         TS_ASSERT_EQUALS( m[ 1 ][ 2 ], 1 );
 
+        TS_ASSERT_THROWS( m[ 2 ][ 0 ], std::out_of_range);
+        TS_ASSERT_THROWS( m[ 0 ][ 3 ], std::out_of_range);
+        TS_ASSERT_THROWS( m[ 2 ][ 3 ], std::out_of_range);
+
         TS_ASSERT_THROWS( m[-1][0] , std::out_of_range);
         TS_ASSERT_THROWS( m[ 13 ][ 37 ] , std::out_of_range);
     }
@@ -108,6 +112,18 @@ public:
         std::stringstream s("  [ 99 -34 ; 0 hello ; 78 32]");
         TS_ASSERT_THROWS( s >> m , domain_error);
 
+    }
+
+    void testStreamOperator() {
+        const char * init_string = "[ 1 2 \n; 3 4 ]";
+        Matrix m;
+        init_matrix(m, init_string);
+
+        std::stringstream ss;
+
+        ss << m;
+
+        TS_ASSERT_EQUALS(ss.str(), init_string);
     }
 };
 

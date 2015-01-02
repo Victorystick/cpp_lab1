@@ -3,9 +3,9 @@ Matrix flaws
 
 * [ ] 1:
 * [ ] 2:
-* [x] 3: stream into empty matrix doubles values
+* [x] 3: stream >> { empty matrix } // Results in doubled values
 * [ ] 4:
-* [ ] 5:
+* [x] 5: stream << { matrix } // Adds extra rows and columns
 * [ ] 6:
 * [ ] 7:
 * [ ] 8:
