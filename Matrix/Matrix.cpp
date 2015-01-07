@@ -156,7 +156,7 @@ Matrix Matrix::operator-() const {
 
 	for (index i = 0; i < rows(); ++i) {
 		for (index j = 0; j < cols(); ++j) {
-			m[j][i] = -m_vectors[j][i];
+			m[i][j] = -m_vectors[i][j];
 		}
 	}
 
