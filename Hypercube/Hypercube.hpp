@@ -3,20 +3,28 @@
 
 #include "../Vector/Vector.hpp"
 
+/*
+	Defines a N-dimensional cube.
+	Each dimension is of same size.
+*/
 template <int Dimension>
-class Hypercube : private Vector<Hypercube<Dimension-1>> {
+class Hypercube : public Vector<Hypercube<Dimension-1>> {
 
 public:
+	//To bad we need a default constructor for our Vector implementation, but what to do...
 	Hypercube() : Vector<Hypercube<Dimension-1>>(0) {}
+
+	/*
+		Initializes a Hypercube<Dimension> with a given size.
+		The resulting cube contains a total of size^Dimension elements.
+	*/
 	Hypercube(size_t size) : Vector<Hypercube<Dimension-1>>(size, Hypercube<Dimension-1>(size)) {}
-	Hypercube<Dimension-1> & operator[](size_t i) {
-		return Vector<Hypercube<Dimension-1>>::operator[](i);
-	}
-	const Hypercube<Dimension-1> & operator[](size_t i) const {
-		return Vector<Hypercube<Dimension-1>>::operator[](i);
-	}
 };
 
+/*
+	Template specialization to handle base-case of 1 dimensional cube.
+	Then we wish to inherit from a int vector instead.
+*/
 template <>
 class Hypercube<1> : public Vector<int> {
 	public:
