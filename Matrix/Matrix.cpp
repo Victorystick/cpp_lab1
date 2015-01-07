@@ -123,7 +123,7 @@ Matrix Matrix::operator* (const Matrix & m) const {
 		throw std::out_of_range("Incompatible matrices"); //std::domain_error?
 	}
 
-	Matrix res (m.rows(), cols());
+	Matrix res (rows(), m.cols());
 	for (index k = 0; k < res.cols(); ++k) {
 		for (index i = 0; i < rows(); ++i) {
 			for (index j = 0; j < cols(); ++j) {
