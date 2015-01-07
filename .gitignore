@@ -6,6 +6,7 @@ Vector/*_gen.cpp
 *.lo
 *.o
 *.obj
+*.gch
 
 # Compiled Dynamic libraries
 *.so
