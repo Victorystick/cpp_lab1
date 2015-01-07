@@ -78,12 +78,12 @@ public:
 
         TS_ASSERT_EQUALS( n, m );
 
-        m = a_matrix_3by2();
+        Matrix o = a_matrix_3by2();
 
-        n = m;
+        Matrix p = o;
 
-        TS_ASSERT_EQUALS( n, m );
-        TS_ASSERT_EQUALS( n[0][0], m[0][0] );
+        TS_ASSERT_EQUALS( p, o );
+        TS_ASSERT_EQUALS( p[0][0], o[0][0] );
     }
 
     void testCopyAssignment() {
