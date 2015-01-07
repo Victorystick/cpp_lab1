@@ -1,4 +1,4 @@
-CXXFLAGS=-std=c++11 -Wall -Wextra
+CXXFLAGS=-std=c++11 -Wall -Wextra -g
 
 # Change these
 cxxtestpath = /info/cprog11/cxxtest/
@@ -13,9 +13,14 @@ runtest0%: testcode.cpp
 	$(CXX) $(CXXFLAGS) -I $(cxxtestpath) -o runtest0$* -DTEST0$* testcode.cpp Matrix0$*.o
 	./runtest0$*
 
-test: Matrix.o
-	$(CXX) $(CXXFLAGS) -I $(cxxtestpath) -o test testcode.cpp Matrix.o
-	./test
+runtestown: owntest
+	./owntest
+
+Matrix.o: ../Vector/Vector.tpp Matrix.cpp Matrix.h
+	$(CXX) $(CXXFLAGS) Matrix.cpp -o Matrix.o -c
+
+owntest: Matrix.o example_test.h testcode.cpp
+	$(CXX) $(CXXFLAGS) -I $(cxxtestpath) -o owntest testcode.cpp Matrix.o
 
 clean:
 	touch runtest01 testcode.cpp
