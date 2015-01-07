@@ -402,11 +402,7 @@ public:
 
         TS_ASSERT_EQUALS( i, Matrix(2, 2) );
 
-        std::stringstream ss2(" [ 1 1 1 ; 1 2 2 ; 1 2 2 ]");
-
-        i = Matrix(3);
-
-        ss2 >> i;
+        init_matrix(i, " [ 1 1 1 ; 1 2 2 ; 1 2 2 ]");
 
         i = i - Matrix(3);
 
@@ -420,6 +416,7 @@ public:
         TS_ASSERT_EQUALS( i[ 2 ][ 1 ], 2 );
         TS_ASSERT_EQUALS( i[ 2 ][ 2 ], 1 );
 
+        std::stringstream ss2;
         ss2 << i;
 
         TS_ASSERT_EQUALS(ss2.str(), std::string("[ 0 1 1 \n; 1 1 2 \n; 1 2 1 ]"));
