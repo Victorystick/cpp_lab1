@@ -4,7 +4,6 @@
 
 void UIntVector::init(const size_t s) {
 	length = s;
-
 	vec = new unsigned int[s];
 
 	reset();

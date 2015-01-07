@@ -17,47 +17,45 @@ class UIntVector {
 		//Does not really need to be explicit.
 
 		/*
-			Copy
+			Copies the elements of the given vector.
 		*/
 		UIntVector(const UIntVector &);
 
 		/*
-			Move
+			Steals element from given vector.
 		 */
 		UIntVector(UIntVector &&);
 
-		// Destructor
+		/*
+			Destructor.
+			Destroys underlying storage but does not delete contents.
+		*/
 		~UIntVector();
 
 		// Assignment
 		const UIntVector & operator=(const UIntVector & temp);
 		const UIntVector & operator=(UIntVector &&);
 
+		/*
+			Returns the current number of elements in the vector.
+		*/
 		size_t size() const { return length; }
 
+		/*
+			Sets all elements in the vector to 0.
+		*/
 		void reset();
 
 		/*
-			An Array reference keeps the array typing information AND
-			can be passed as parameter
-			This allows us to define a constructor that actually takes
-			an array as its input and constructs from it.
-
-			The template is because like in Go, the array length is part of the type
-			So we are creating enough versions of it for all different
-			lengths of arrays we use.
-
-			Also, it is located here in the header because any implicit generation
-			of templates needs access to the definition
-			That means (mostly) the templating information needs to be in the header.
+			Element accessor method.
+			returns the element at the given position in the vector.
 		*/
-		template<size_t N>
-		UIntVector(unsigned int (&v)[N]) {
-			init(N);
-			std::copy(v, v+N, vec);
-		}
-
 		unsigned int & get(const size_t) const;
+
+		/*
+			Element access operators.
+			Equivalent to get() member function.
+		*/
 		unsigned int & operator[](const size_t);
 		unsigned int operator[](const size_t) const;
 };
