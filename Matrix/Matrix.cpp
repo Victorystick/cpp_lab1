@@ -69,8 +69,6 @@ const Matrix::matrix_row& Matrix::operator[](index i) const {
 		throw std::out_of_range("index out of bounds");
 	}
 
-	std::cout << "Accessed " << (size_t)this << std::endl;
-
 	return m_vectors[i];
 }
 
