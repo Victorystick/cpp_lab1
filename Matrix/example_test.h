@@ -119,6 +119,8 @@ public:
     void testIndexOperator() {
         Matrix m( 2, 2 );
         TS_ASSERT( m[ 0 ][ 1 ] == 0 );
+        TS_ASSERT_THROWS( m[ 2 ][ 0 ], std::out_of_range);
+        TS_ASSERT_THROWS( m[ 0 ][ 2 ], std::out_of_range);
 
         m = a_matrix_3by2();
         TS_ASSERT_EQUALS( m[ 0 ][ 0 ], 1 );
