@@ -85,10 +85,10 @@ Matrix Matrix::operator+ ( const Matrix& other) const {
 		throw std::out_of_range("Incompatible sizes");
 	}
 
-	Matrix res (cols(), rows());
+	Matrix res (rows(), cols());
 	for (index i = 0; i < rows(); ++i) {
 		for (index j = 0; j < cols(); ++j) {
-			res[j][i] = m_vectors[j][i] + other[j][i];
+			res[i][j] = m_vectors[i][j] + other[i][j];
 		}
 	}
 	return res;
@@ -99,20 +99,20 @@ Matrix Matrix::operator- ( const Matrix& other) const {
 		throw std::out_of_range("Incompatible sizes");
 	}
 
-	Matrix res (cols(), rows());
+	Matrix res (rows(), cols());
 	for (index i = 0; i < rows(); ++i) {
 		for (index j = 0; j < cols(); ++j) {
-			res[j][i] = m_vectors[j][i] - other[j][i];
+			res[i][j] = m_vectors[i][j] - other[i][j];
 		}
 	}
 	return res;
 }
 
 Matrix Matrix::operator* ( int coefficient) const {
-	Matrix res (cols(), rows());
+	Matrix res (rows(), cols());
 	for (index i = 0; i < rows(); ++i) {
 		for (index j = 0; j < cols(); ++j) {
-			res[j][i] = m_vectors[j][i] * coefficient;
+			res[i][j] = m_vectors[i][j] * coefficient;
 		}
 	}
 	return res;
@@ -123,7 +123,7 @@ Matrix Matrix::operator* (const Matrix & m) const {
 		throw std::out_of_range("Incompatible matrices"); //std::domain_error?
 	}
 
-	Matrix res (m.cols(), rows());
+	Matrix res (m.rows(), cols());
 	for (index k = 0; k < res.cols(); ++k) {
 		for (index i = 0; i < rows(); ++i) {
 			for (index j = 0; j < cols(); ++j) {
