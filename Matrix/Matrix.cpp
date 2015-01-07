@@ -137,9 +137,12 @@ Matrix Matrix::operator* (const Matrix & m) const {
 
 Matrix & Matrix::operator=(const Matrix & m) {
 	m_vectors = Vector<matrix_row>(m.rows());
+	m_rows = m.rows();
+	m_cols = m.cols();
 
 	for (index i = 0; i < rows(); ++i) {
 		matrix_row & r = m_vectors[i] = matrix_row(cols());
+
 		for (index j = 0; j < cols(); ++j) {
 			r[j] = m[i][j];
 		}
