@@ -59,7 +59,7 @@ void Vector<T>::copy_data(const size_t end, const T* other,
 }
 
 template <typename T>
-void Vector<T>::is_ok() {
+void Vector<T>::is_ok() const {
 	static_assert(std::is_move_constructible<T>::value,
 		"The T type of Vector<T> must be move constructible.");
 	static_assert(std::is_move_assignable<T>::value,
@@ -217,7 +217,7 @@ size_t Vector<T>::capacity() const {
 }
 
 template <typename T>
-void Vector<T>::print() {
+void Vector<T>::print() const {
 		for (int i = 0; i < size(); ++i) {
 			std::clog << i << "=" << vec[i] << std::endl;
 		}
