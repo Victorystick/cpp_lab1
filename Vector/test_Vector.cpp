@@ -9,15 +9,49 @@ class VectorBoolTestSuite : public CxxTest::TestSuite {
 public:
 	void test_simple() {
 		Vector<bool> v(31); // Skapa en 31 stor vektor
+		TS_ASSERT_EQUALS(v.size(), 31);
 		v[3] = true;
+		TS_ASSERT_EQUALS(v[3], true)
 		Vector<bool> w; // tom vektor
+		TS_ASSERT_EQUALS(w.size(), 0);
 
 		std::copy(v.begin(), v.end(), std::back_inserter(w));
-		std::cout << std::distance(v.begin(), v.end());
+		TS_ASSERT_EQUALS(v.size(), 31);
+		TS_ASSERT_EQUALS(w.size(), 0);
+		TS_ASSERT_EQUALS(std::distance(v.begin(), v.end()), 31);
 		// konstant iterator och konvertering
 		Vector<bool>::const_iterator it = v.begin();
 		std::advance(it, 2);
+
 	}
+
+	// bool reversesort (bool b1, bool b2) {return b1 > b2;}
+
+	// void test_sortable() {
+	// 	Vector<bool> v({true, false, true, true, false, false,false, true});
+	// 	std::sort(v.begin(), v.end());
+
+	// 	TS_ASSERT_EQUALS( v[0], false );
+	// 	TS_ASSERT_EQUALS( v[1], false );
+	// 	TS_ASSERT_EQUALS( v[2], false );
+	// 	TS_ASSERT_EQUALS( v[3], false );
+	// 	TS_ASSERT_EQUALS( v[4], true );
+	// 	TS_ASSERT_EQUALS( v[5], true );
+	// 	TS_ASSERT_EQUALS( v[6], true );
+	// 	TS_ASSERT_EQUALS( v[7], true );
+
+	// 	v = {true, false, true, true, false, false,false, true};
+	// 	std::sort(v.begin(), v.end(), reversesort);
+
+	// 	TS_ASSERT_EQUALS( v[0], true );
+	// 	TS_ASSERT_EQUALS( v[1], true );
+	// 	TS_ASSERT_EQUALS( v[2], true );
+	// 	TS_ASSERT_EQUALS( v[3], true );
+	// 	TS_ASSERT_EQUALS( v[4], false );
+	// 	TS_ASSERT_EQUALS( v[5], false );
+	// 	TS_ASSERT_EQUALS( v[6], false );
+	// 	TS_ASSERT_EQUALS( v[7], false );
+	// }
 };
 
 class VectorTestSuite : public CxxTest::TestSuite
