@@ -5,6 +5,21 @@
 
 #include "Vector.hpp"
 
+class VectorBoolTestSuite : public CxxTest::TestSuite {
+public:
+	void test_simple() {
+		Vector<bool> v(31); // Skapa en 31 stor vektor
+		v[3] = true;
+		Vector<bool> w; // tom vektor
+
+		std::copy(v.begin(), v.end(), std::back_inserter(w));
+		std::cout << std::distance(v.begin(), v.end());
+		// konstant iterator och konvertering
+		Vector<bool>::const_iterator it = v.begin();
+		std::advance(it, 2);
+	}
+};
+
 class VectorTestSuite : public CxxTest::TestSuite
 {
 public:

@@ -1,9 +1,3 @@
-//#include "Vector.hpp"
-#include <iostream>
-#include <sstream>
-#include <algorithm>
-#include <iterator>
-#include <memory>
 
 template <typename T>
 void Vector<T>::init(size_t s) {
