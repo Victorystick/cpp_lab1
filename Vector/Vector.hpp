@@ -18,9 +18,11 @@ class Vector {
 		T* vec;
 
 		void init(size_t);
+		void deinit(T v[]);
+		void internal_reset();
 		void copy(const Vector &);
 		void more_memory();
-		void copy_data(const size_t, const T*, const size_t = 0, const int = 0);
+		void copy_data(const T[], const size_t, const size_t = 0, const int = 0);
 		void is_ok() const;
 		void set_all(const T &);
 
