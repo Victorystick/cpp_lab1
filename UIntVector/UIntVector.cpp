@@ -1,5 +1,6 @@
-#include <cstdlib>
-#include <stdexcept> // Exceptions
+#ifndef KATTIS__UINTVECTOR_IMPL_GUARD
+#define KATTIS__UINTVECTOR_IMPL_GUARD
+
 #include "UIntVector.hpp"
 
 void UIntVector::init(const size_t s) {
@@ -74,7 +75,7 @@ const UIntVector & UIntVector::operator=(const UIntVector & temp) {
 const UIntVector & UIntVector::operator=(UIntVector && temp) {
 	std::swap(length, temp.length);
 	std::swap(vec, temp.vec);
-
+	temp.length = 0;
 	return *this;
 }
 
@@ -94,3 +95,5 @@ unsigned int & UIntVector::operator[](const size_t index) {
 unsigned int UIntVector::operator[](const size_t index) const {
 	return get(index);
 }
+
+#endif

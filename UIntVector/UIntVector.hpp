@@ -1,5 +1,8 @@
 #include <algorithm>
 
+#ifndef JOC_UIntVector
+#define JOC_UIntVector
+
 class UIntVector {
 	private:
 		size_t length;
@@ -17,45 +20,51 @@ class UIntVector {
 		//Does not really need to be explicit.
 
 		/*
-			Copies the elements of the given vector.
+			Copy
 		*/
 		UIntVector(const UIntVector &);
 
 		/*
-			Steals element from given vector.
+			Move
 		 */
 		UIntVector(UIntVector &&);
 
-		/*
-			Destructor.
-			Destroys underlying storage but does not delete contents.
-		*/
+		// Destructor
 		~UIntVector();
 
 		// Assignment
 		const UIntVector & operator=(const UIntVector & temp);
 		const UIntVector & operator=(UIntVector &&);
 
-		/*
-			Returns the current number of elements in the vector.
-		*/
 		size_t size() const { return length; }
 
-		/*
-			Sets all elements in the vector to 0.
-		*/
 		void reset();
 
 		/*
-			Element accessor method.
-			returns the element at the given position in the vector.
-		*/
-		unsigned int & get(const size_t) const;
+			An Array reference keeps the array typing information AND
+			can be passed as parameter
+			This allows us to define a constructor that actually takes
+			an array as its input and constructs from it.
 
-		/*
-			Element access operators.
-			Equivalent to get() member function.
+			The template is because like in Go, the array length is part of the type
+			So we are creating enough versions of it for all different
+			lengths of arrays we use.
+
+			Also, it is located here in the header because any implicit generation
+			of templates needs access to the definition
+			That means (mostly) the templating information needs to be in the header.
 		*/
+		template<size_t N>
+		UIntVector(unsigned int (&v)[N]) {
+			init(N);
+			std::copy(v, v+N, vec);
+		}
+
+		unsigned int & get(const size_t) const;
 		unsigned int & operator[](const size_t);
 		unsigned int operator[](const size_t) const;
 };
+
+#include "kth_cprog_simple_container.kpp"
+
+#endif
